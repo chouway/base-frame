@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.base</groupId>
+        <artifactId>base-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../base-parent</relativePath>
+    </parent>
+
+    <groupId>${parent.groupId}</groupId>
+    <artifactId>base-api</artifactId>
+    <packaging>jar</packaging>
+    <version>${parent.version}</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.base</groupId>
+            <artifactId>base-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- mybatis generator的插件 -->
+            <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>${mgb.version}</version>
+
+                <configuration>
+                    <verbose>true</verbose><!-- 罗列明细-->
+                    <overwrite>true</overwrite><!-- 覆盖已有文件 -->
+                    <!-- 配置configureFile的路径和名称 -->
+                    <configurationFile>
+                       ${basedir}/src/main/resources/generatorConfig.xml
+                    </configurationFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.base</groupId>
+                        <artifactId>base-common</artifactId>
+                        <version>${parent.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
