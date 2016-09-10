@@ -29,7 +29,7 @@ default-lazy-init="true">
 	<!-- 自动扫描(自动注入) -->
 	<context:component-scan base-package="com.base"/>
 
-	<bean class="com.base.framwork.SpringContextUtil" lazy-init="false" />
+	<bean class="com.base.framwork.context.SpringContextUtil" lazy-init="false" />
 
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

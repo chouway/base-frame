@@ -2,6 +2,7 @@ package com.base.platform.dubbo.service;
 
 import com.alibaba.fastjson.JSON;
 import com.base.framwork.CommonTest;
+import com.base.framwork.bean.page.Page;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import org.junit.Test;
@@ -56,5 +57,14 @@ public class BaseServerServiceTest extends CommonTest{
         params.put("id","1");
         List<BaseServerInfo> list = baseServerService.getExtByMap(params);
         logger.info("-->list={}", JSON.toJSONString(list));
+    }
+
+    @Test
+    public void getExtByPage() throws Exception {
+        Map<String,Object> params = new HashMap<String,Object>();
+//        params.put("id","1");
+        Page<BaseServerInfo> page = new Page<BaseServerInfo>(2, 1);
+        Page<BaseServerInfo> extByPage = baseServerService.getExtByPage(params, page);
+        logger.info("-->extByPage={}", JSON.toJSONString(extByPage));
     }
 }

@@ -1,5 +1,6 @@
 package com.base.framwork;
 
+import com.base.framwork.context.SpringContextUtil;
 import com.base.platform.dubbo.service.IBaseServerService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.base.framwork;
+package com.base.framwork.context;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;

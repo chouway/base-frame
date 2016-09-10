@@ -1,12 +1,15 @@
 package com.base.platform.dubbo.service;
 
+import com.base.framwork.bean.page.Page;
 import com.base.framwork.exception.BusinessException;
+import com.base.framwork.plugin.page.PageHelper;
 import com.base.platform.dubbo.dao.mgb.BaseServerInfoDao;
 import com.base.platform.dubbo.dao.ext.BaseServerInfoDaoExt;
-import com.base.framwork.BaseService;
+import com.base.framwork.context.BaseService;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.framwork.util.UUIDUtils;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +58,15 @@ public class BaseServerService extends BaseService implements IBaseServerService
     public List<BaseServerInfo> getExtByMap(Map<String, Object> params) throws BusinessException {
         return this.getDao(BaseServerInfoDaoExt.class).getByMap(params);
 
+    }
+
+
+    //test succes 服务集成page 自动分页 使用ibatis 拦截器
+    @Override
+    public Page<BaseServerInfo> getExtByPage(Map<String, Object> params, Page page) throws BusinessException {
+        PageHelper.startPage(page);
+        this.getDao(BaseServerInfoDaoExt.class).getByMap(params);
+        return PageHelper.endPage();
     }
 
 

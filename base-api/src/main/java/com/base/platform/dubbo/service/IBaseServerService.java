@@ -1,6 +1,7 @@
 package com.base.platform.dubbo.service;
 
 
+import com.base.framwork.bean.page.Page;
 import com.base.framwork.exception.BusinessException;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
@@ -40,4 +41,6 @@ public interface IBaseServerService {
     long countServer(BaseServerInfoCondition condition);
 
     List<BaseServerInfo> getExtByMap(Map<String,Object> params)throws BusinessException;
+
+    Page<BaseServerInfo> getExtByPage(Map<String,Object> params, Page page)throws BusinessException;
 }

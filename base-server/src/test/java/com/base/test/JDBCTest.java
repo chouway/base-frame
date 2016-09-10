@@ -1,7 +1,7 @@
 package com.base.test;
 
 import com.base.framwork.CommonTest;
-import com.base.framwork.BaseService;
+import com.base.framwork.context.BaseService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;
