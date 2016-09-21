@@ -22,6 +22,7 @@ default-lazy-init="true">
 		<property name="locations">
 				<list>
 					<value>classpath:conf/config.properties</value>
+					<value>classpath:properties/application.properties</value>
 				</list>
 		</property>
 	</bean>

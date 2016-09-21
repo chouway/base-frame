@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
  * @author zhouyw
  * @date 2016.09.09
  */
-@Component
-public class BaseService {
+public abstract class BaseService {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 

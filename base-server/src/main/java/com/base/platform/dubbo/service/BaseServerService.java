@@ -9,11 +9,12 @@ import com.base.framwork.context.BaseService;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.framwork.util.UUIDUtils;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,14 @@ import java.util.Map;
 @Service
 @Transactional
 public class BaseServerService extends BaseService implements IBaseServerService {
+
+    @Value("${application.preFixedUrl}")
+    private String preFixedUrl;
+
+    @PostConstruct
+    private void init(){
+        logger.info("@PostConstruct init-->preFixedUrl={}", preFixedUrl);
+    }
 
     @Autowired
     private BaseServerInfoDao baseServerInfoDao;

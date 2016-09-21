@@ -127,7 +127,8 @@
         <!-- log tool END -->
 
 
-        <!--dubbo STR-->
+        <!--dubbo STR -->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
@@ -150,20 +151,13 @@
 
         <!-- druid END -->
 
-        <!--dubbo STR     brach 1  change 16-09-12 -->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>2.5.3</version>
-        </dependency>
+        <!--zookeeper STR-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.4.6</version>
+            <version>${zookeeper.version}</version>
         </dependency>
-
-        <!--dubbo END -->
+        <!--zookeeper END -->
 
 
         <dependency>

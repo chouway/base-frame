@@ -2,6 +2,7 @@ package com.base.test;
 
 import com.base.framwork.CommonTest;
 import com.base.framwork.context.BaseService;
+import com.base.framwork.context.SpringContextUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;
@@ -19,11 +20,11 @@ import java.sql.DatabaseMetaData;
 public class JDBCTest extends CommonTest {
 
     @Autowired
-    private BaseService baseService;
+    private SpringContextUtil springContextUtil;
 
     @Test
     public void testJdbc() throws Exception {
-        ApplicationContext applicationContext = baseService.getApplicationContext();
+        ApplicationContext applicationContext = springContextUtil.getApplicationContext();
         Object object = applicationContext.getBean("sqlSessionFactory");
         DefaultSqlSessionFactory sqlSessionFactory = (DefaultSqlSessionFactory)object;
         SqlSession sqlSession = sqlSessionFactory.openSession();
