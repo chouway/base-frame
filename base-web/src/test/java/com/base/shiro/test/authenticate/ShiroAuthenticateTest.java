@@ -1,9 +1,10 @@
-package com.base.shiro.test;
+package com.base.shiro.test.authenticate;
 
 import com.alibaba.fastjson.JSON;
 import com.base.common.CommonTest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
@@ -16,11 +17,11 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * ShiroTest
+ * ShiroTest  身份认证
  * @author zhouyw
  * @date 2016.11.02
  */
-public class ShiroTest extends CommonTest {
+public class ShiroAuthenticateTest extends CommonTest {
     /**
      * 登录/登出
      */
@@ -28,6 +29,11 @@ public class ShiroTest extends CommonTest {
     public void loginLogout() {
         String iniResourcePath = "classpath:shiro/ini.properties";
         testLoginLoginOut(iniResourcePath);
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.isAuthenticated()){
+            subject.logout();//退出
+            Assert.assertEquals(false, subject.isAuthenticated());//断言已登出
+        }
 
     }
 
@@ -56,8 +62,14 @@ public class ShiroTest extends CommonTest {
         //得到一个身份集合，其包含了 Realm 验证成功的身份信息
         PrincipalCollection principalCollection = subject.getPrincipals();
         List list = principalCollection.asList();
-        logger.info("-->list={}", JSON.toJSONString(list));
+        logger.info("-->list={}", JSON.toJSONString(list));//-->list=["zhang","zhang@163.com"]
         Assert.assertEquals(2, list.size());
+    }
+
+    @Test(expected = UnknownAccountException.class)
+    public void allSuccessfulStrategyWithFail() {
+        testLoginLoginOut("classpath:shiro/shiro-authenticator-all-fail.ini");
+        Subject subject = SecurityUtils.getSubject();
     }
 
 
@@ -77,13 +89,9 @@ public class ShiroTest extends CommonTest {
             subject.login(token);
         } catch (AuthenticationException e) {
             logger.error("error:-->e={}", e,e);
+            throw e;
         //5、身份验证失败
         }
         Assert.assertEquals(true, subject.isAuthenticated()); //断言用户已经登录
-        if(subject.isAuthenticated()){
-            //6、退出
-            subject.logout();
-            Assert.assertEquals(false, subject.isAuthenticated());//断言已登出
-        }
     }
 }

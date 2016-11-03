@@ -1,4 +1,4 @@
-package com.base.shiro.bean;
+package com.base.shiro.bean.authenticate;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.realm.Realm;
@@ -8,10 +8,10 @@ import org.apache.shiro.realm.Realm;
  * @author zhouyw
  * @date 2016.11.02
  */
-public class MySingleRealm2 implements Realm {
+public class MySingleRealm1 implements Realm {
     @Override
     public String getName() {
-        return "mySingleRealm";
+        return "mySingleRealm1";
     }
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -23,7 +23,7 @@ public class MySingleRealm2 implements Realm {
             AuthenticationException {
         String username = (String)token.getPrincipal(); //得到用户名
         String password = new String((char[])token.getCredentials()); //得到密码
-        if(!"wang".equals(username)) {
+        if(!"zhang".equals(username)) {
             throw new UnknownAccountException(); //如果用户名错误
         }
         if(!"123".equals(password)) {

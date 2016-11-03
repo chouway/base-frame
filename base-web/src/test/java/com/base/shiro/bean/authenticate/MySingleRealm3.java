@@ -1,4 +1,4 @@
-package com.base.shiro.bean;
+package com.base.shiro.bean.authenticate;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.realm.Realm;
@@ -11,7 +11,7 @@ import org.apache.shiro.realm.Realm;
 public class MySingleRealm3 implements Realm {
     @Override
     public String getName() {
-        return "mySingleRealm";
+        return "mySingleRealm3";
     }
     @Override
     public boolean supports(AuthenticationToken token) {

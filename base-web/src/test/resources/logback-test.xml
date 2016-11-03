@@ -84,10 +84,11 @@
     <!-- 控制台 end -->
 
     <!-- 当前项目 begin -->
+    <!--
     <logger name="com.base" additivity="true" level="${logLeve}">
-        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE-WARN"/>
         <appender-ref ref="FILE-ERROR"/>
     </logger>
+    -->
     <!-- 当前项目 end -->
 </configuration>
