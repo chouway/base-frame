@@ -1,4 +1,4 @@
-package com.base.shiro.bean.authenticate;
+package com.base.shiro.test.authenticate.bean;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.realm.Realm;
