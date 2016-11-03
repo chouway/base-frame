@@ -28,7 +28,7 @@ public class ShiroAuthenticateTest extends CommonTest {
     @Test
     public void loginLogout() {
         String iniResourcePath = "classpath:shiro/ini.properties";
-        testLoginLoginOut(iniResourcePath);
+        testLogin(iniResourcePath);
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated()){
             subject.logout();//退出
@@ -40,24 +40,24 @@ public class ShiroAuthenticateTest extends CommonTest {
     @Test
     public void loginLogoutSingle(){
         String iniResourcePath = "classpath:shiro/shiro-realm-single.ini";
-        testLoginLoginOut(iniResourcePath);
+        testLogin(iniResourcePath);
     }
 
 
     @Test
     public void loginLogoutMany(){
         String iniResourcePath = "classpath:shiro/shiro-realm-many.ini";
-        testLoginLoginOut(iniResourcePath);
+        testLogin(iniResourcePath);
     }
     @Test
     public void loginLogoutJdbc(){
         String iniResourcePath = "classpath:shiro/shiro-jdbc-realm.ini";
-        testLoginLoginOut(iniResourcePath);
+        testLogin(iniResourcePath);
     }
 
     @Test
     public void allSuccessfulStrategyWithSuccess() {
-        testLoginLoginOut("classpath:shiro/shiro-authenticator-all-success.ini");
+        testLogin("classpath:shiro/shiro-authenticator-all-success.ini");
         Subject subject = SecurityUtils.getSubject();
         //得到一个身份集合，其包含了 Realm 验证成功的身份信息
         PrincipalCollection principalCollection = subject.getPrincipals();
@@ -68,13 +68,17 @@ public class ShiroAuthenticateTest extends CommonTest {
 
     @Test(expected = UnknownAccountException.class)
     public void allSuccessfulStrategyWithFail() {
-        testLoginLoginOut("classpath:shiro/shiro-authenticator-all-fail.ini");
-        Subject subject = SecurityUtils.getSubject();
+        testLogin("classpath:shiro/shiro-authenticator-all-fail.ini");
+    }
+
+    @Test
+    public void atLeastOneSuccessStrategy() {
+        testLogin("classpath:shiro/shiro-authenticator-at-least-one-success.ini");
     }
 
 
     /* -----private method spilt----- */
-    private void testLoginLoginOut(String iniResourcePath) {
+    private void testLogin(String iniResourcePath) {
         //1、获取 SecurityManager 工厂，此处使用 Ini 配置文件初始化 SecurityManager
         Factory<SecurityManager> factory =
                 new IniSecurityManagerFactory(iniResourcePath);
