@@ -47,7 +47,7 @@ public class ShiroAuthorizeTest extends CommonTest{
      */
 
     /**
-     * 基于角色 的 访问 控制 （隐 式)
+     * 基于角色的访问控制 （隐式)
      */
     @Test
     public void testHasRole() {
@@ -71,8 +71,136 @@ public class ShiroAuthorizeTest extends CommonTest{
         //断言拥有角色：role1 and role3 失败抛出异常
         subject().checkRoles("role1", "role3");
     }
+    /**
+     * 基于角色的访问控制 （显式)
+     */
+    @Test
+    public void testIsPermitted() {
+        login("shiro-permission.ini", "zhang", "123");
+        //判断拥有权限：user:create
+        Assert.assertTrue(subject().isPermitted("user:create"));
+        //判断拥有权限：user:update and user:delete
+        Assert.assertTrue(subject().isPermittedAll("user:update", "user:delete"));
+        //判断没有权限：user:view
+        Assert.assertFalse(subject().isPermitted("user:view"));
+    }
+
+    @Test(expected = UnauthorizedException.class)
+    public void testCheckPermission () {
+        login("shiro-permission.ini", "zhang", "123");
+        //断言拥有权限：user:create
+        subject().checkPermission("user:create");
+        //断言拥有权限：user:delete and user:update
+        subject().checkPermissions("user:delete", "user:update");
+        //断言拥有权限：user:view 失败抛出异常
+        subject().checkPermissions("user:view");
+    }
+
+    /*
+        字符串通配符权限:  规则： “资源标识符：操作：对象实例 ID” 即对哪个资源的哪个实例可以进行什么操作。
+                        其默认支持通配符权限字符串，“:”表示资源/操作/实例的分割；“,”表示操作的分割；“*”表示任意资源/操作/实例。
+     */
+    @Test
+    public void testCheckCommonSinglSUI(){// 单个资源单个权限
+        login("shiro-permission.ini", "zhang3", "123");
+        subject().checkPermissions("system:user:update");
+    }
+
+    @Test
+    public void testCheckCommonMany1SUI(){// 单个资源多个权限
+        login("shiro-permission.ini", "zhang41", "123");
+        subject().checkPermissions("system:user:update");
+        subject().checkPermissions("system:user:delete");
+        subject().checkPermissions("system:user:update", "system:user:delete");
+//      subject().checkPermissions("system:user:update,delete");//UnauthorizedException: Subject does not have permission [system:user:update,delete]
+    }
+
+    @Test
+    public void testCheckCommonMany2SUI(){// 单个资源多个权限
+        login("shiro-permission.ini", "zhang42", "123");
+        subject().checkPermissions("system:user:update");
+        subject().checkPermissions("system:user:delete");
+        subject().checkPermissions("system:user:update", "system:user:delete");
+        subject().checkPermissions("system:user:update,delete");
+    }
 
 
+    @Test
+    public void testCheckAll51Pemission(){//单个资源全部权限
+        login("shiro-permission.ini", "zhang51", "123");
+        subject().checkPermissions("system:user:create,delete,update:view");
+    }
+
+    @Test
+    public void testCheckAll52Pemission(){//单个资源全部权限
+        login("shiro-permission.ini", "zhang52", "123");
+        subject().checkPermissions("system:user:*");
+        subject().checkPermissions("system:user");
+    }
+
+    @Test
+    public void testCheckAll53Pemission(){//单个资源全部权限
+        login("shiro-permission.ini", "zhang53", "123");
+        subject().checkPermissions("system:user:*");
+        subject().checkPermissions("system:user");
+    }
+
+
+    @Test
+    public void testCheckAll61Pemission(){//全部资源全部权限
+        login("shiro-permission.ini", "zhang61", "123");
+        subject().checkPermissions("user:view");
+//      subject().checkPermissions("system:user:view");//UnauthorizedException: Subject does not have permission [system:user:view]
+    }
+
+    @Test
+    public void testCheckAll62Pemission(){//全部资源全部权限
+        login("shiro-permission.ini", "zhang62", "123");
+        subject().checkPermissions("system:user:view");
+    }
+
+
+    @Test
+    public void testCheckInstance71Pemission(){//单个实例单个权限
+        login("shiro-permission.ini", "zhang71", "123");
+        subject().checkPermissions("user:view:1");
+    }
+
+    @Test
+    public void testCheckInstance72Pemission(){//单个实例多个权限
+        login("shiro-permission.ini", "zhang72", "123");
+        subject().checkPermissions("user:update,delete:1");
+        subject().checkPermissions("user:update:1", "user:delete:1");
+    }
+    @Test
+    public void testCheckInstance73Pemission(){//单个实例所有权限
+        login("shiro-permission.ini", "zhang73", "123");
+        subject().checkPermissions("user:update:1", "user:delete:1", "user:view:1");
+    }
+    @Test
+    public void testCheckInstance74Pemission(){//所有实例单个权限
+        login("shiro-permission.ini", "zhang74", "123");
+        subject().checkPermissions("user:auth:1", "user:auth:2");
+    }
+    @Test
+    public void testCheckInstance75Pemission(){//所有实例所有权限
+        login("shiro-permission.ini", "zhang75", "123");
+        subject().checkPermissions("user:view:1", "user:auth:2");
+    }
+
+    @Test
+    public void testCustomIsPermitted() {
+        login("shiro-authorizer.ini", "zhang", "123");
+        //判断拥有权限：user:create
+        Assert.assertTrue(subject().isPermitted("user1:update"));
+        Assert.assertTrue(subject().isPermitted("user2:update"));
+        //通过二进制位的方式表示权限
+        Assert.assertTrue(subject().isPermitted("+user1+2"));//新增权限
+        Assert.assertTrue(subject().isPermitted("+user1+8"));//查看权限
+        Assert.assertTrue(subject().isPermitted("+user2+10"));//新增及查看
+        Assert.assertFalse(subject().isPermitted("+user1+4"));//没有删除权限
+        Assert.assertTrue(subject().isPermitted("menu:view"));// 通过MyRolePermissionResolver 解析得到的权限
+    }
 
     /* -----private method spilt----- */
 
