@@ -8,7 +8,7 @@ import org.apache.shiro.realm.Realm;
  * @author zhouyw
  * @date 2016.11.02
  */
-public class MySingleRealm implements Realm {
+public class MySingleRealm1 implements Realm {
     @Override
     public String getName() {
         return "mySingleRealm";
