@@ -76,7 +76,10 @@ public class ShiroAuthenticateTest extends CommonTest {
         testLogin("classpath:shiro/shiro-authenticator-at-least-one-success.ini");
     }
 
-
+    @Test
+    public void firstSuccessfulStrategy(){
+        testLogin("classpath:shiro/shiro-authenticator-first-success.ini");
+    }
     /* -----private method spilt----- */
     private void testLogin(String iniResourcePath) {
         //1、获取 SecurityManager 工厂，此处使用 Ini 配置文件初始化 SecurityManager
@@ -97,5 +100,6 @@ public class ShiroAuthenticateTest extends CommonTest {
         //5、身份验证失败
         }
         Assert.assertEquals(true, subject.isAuthenticated()); //断言用户已经登录
+        logger.info("-->subject={}", JSON.toJSONString(subject));
     }
 }
