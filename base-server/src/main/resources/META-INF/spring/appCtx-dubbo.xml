@@ -19,9 +19,10 @@
 
 	<!-- protocol configuration -->
 	<dubbo:protocol id="DUBBOInnerService" name="dubbo" port="${mvn.dubbo.port}" />
- 
-	<dubbo:provider protocol="DUBBOInnerService" filter="dubboLogServiceFilter" /><!-- provider 
-		protocol default value, only if the service's protocol property not config -->
+	<dubbo:protocol name="hessian" port="8787" server="jetty" />
+
+	<dubbo:provider protocol="DUBBOInnerService" host="${dubboBindHost}" filter="dubboLogServiceFilter" />
+	<!-- provider protocol default value, only if the service's protocol property not config -->
 
 	<bean
 		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
@@ -30,6 +31,6 @@
 		<property name="arguments">
 			<util:properties location="${mvn.dubboResolvePropertiesFile}" />
 		</property>
-	</bean>	
-			
+	</bean>
+
 </beans>
