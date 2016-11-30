@@ -8,9 +8,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="url" value="${jdbc_url}" />
-		<property name="username" value="${jdbc_username}" />
-		<property name="password" value="${jdbc_password}" />
+		<property name="url" value="${mvn.jdbc.url}" />
+		<property name="username" value="${mvn.jdbc.username}" />
+		<property name="password" value="${mvn.jdbc.password}" />
 
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="0" />
@@ -25,7 +25,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
 		<!-- <property name="poolPreparedStatements" value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
 
-		<property name="validationQuery" value="${validationQuery}" />
+		<property name="validationQuery" value="${mvn.jdbc.validationQuery}" />
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
 		<property name="testWhileIdle" value="true" />
@@ -51,8 +51,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
-		<property name="mapperLocations" value="classpath:daos/com/base/platform/*/dao/**/*.xml" />
-		<property name="configLocation" value="classpath:conf/mybatis-config.xml"></property>
+		<!--<property name="mapperLocations" value="classpath:daos/com/base/platform/dubbo/dao/ext/BaseConsumeInfoDaoExt.xml" />-->
+		<property name="mapperLocations" value="classpath:daos/com/base/platform/**/*.xml" />
+		<property name="configLocation" value="classpath:properties/mybatis-config.xml"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

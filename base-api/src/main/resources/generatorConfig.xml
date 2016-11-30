@@ -79,37 +79,19 @@
         </javaClientGenerator>
 
         <!-- 3. 指定为哪些数据表生成MyBatis文件 -->
-        <!-- table.alias:数据表别名，所有数据列将重命名为alias_actualColumnName -->
-        <!--
-        <table schema="MYSCHEMA" tableName="myPet" domainObjectName="MyPet" >
-            <property name="useActualColumnNames" value="true"/>
-            <columnRenamingRule searchString="CUST_" replaceString="" />
-            <columnOverride column="owner" property="ownerName" />
-            <ignoreColumn column="sex" />
-        </table>-->
-
         <!-- 生成指令  clean mybatis-generator:generate-->
         <!--MyBatis3-->
-        <!--
-        <table tableName="base_server_info"  domainObjectName="BaseServerInfo" mapperName="{0}Dao"
-               enableUpdateByExample="false" enableDeleteByExample="false" selectByExampleQueryId="false"
-               enableCountByExample="false"  enableSelectByExample="false" >
-        </table>
-        -->
-
-        <!--com.mbg.plugin.DefMyBatis3-->
-
         <!-- dubbo 模块-->
         <table tableName="base_server_info"  mapperName="{0}Dao"
-               enableUpdateByExample="false" enableDeleteByExample="false" selectByExampleQueryId="false"
+               enableUpdateByExample="true" enableDeleteByExample="true" selectByExampleQueryId="false"
                enableCountByExample="true"  enableSelectByExample="true" >
         </table>
         <table tableName="base_consume_info"  mapperName="{0}Dao"
-               enableUpdateByExample="false" enableDeleteByExample="false" selectByExampleQueryId="false"
+               enableUpdateByExample="true" enableDeleteByExample="true" selectByExampleQueryId="false"
                enableCountByExample="true"  enableSelectByExample="true" >
         </table>
         <table tableName="base_server_consume_rel"  mapperName="{0}Dao"
-               enableUpdateByExample="false" enableDeleteByExample="false" selectByExampleQueryId="false"
+               enableUpdateByExample="true" enableDeleteByExample="true" selectByExampleQueryId="false"
                enableCountByExample="true"  enableSelectByExample="true" >
         </table>
     </context>

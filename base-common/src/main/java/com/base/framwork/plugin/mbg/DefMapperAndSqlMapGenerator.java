@@ -180,6 +180,7 @@ public class DefMapperAndSqlMapGenerator extends PluginAdapter {
 			IntrospectedTable introspectedTable) {
 		//改名
 		method.setName("deleteByCondition");
+		replaceMethodParamExample2Condition(method);
 		return super.clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable);
 	}
 
@@ -188,6 +189,7 @@ public class DefMapperAndSqlMapGenerator extends PluginAdapter {
 			IntrospectedTable introspectedTable) {
 		//改名
 		method.setName("updateByCondition");
+		replaceMethodParamExample2Condition(method);
 		return super.clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable);
 	}
 
@@ -221,14 +223,18 @@ public class DefMapperAndSqlMapGenerator extends PluginAdapter {
 
 	//add by zyw
 	protected void replaceExample2Condition(XmlElement element) {
-		List<Attribute> attributes = element.getAttributes();
-		for (Attribute attribute : attributes) {
-			String attrKey = "id";
-			if(replaceAttrValueExample2Condition(attribute, attrKey)){
-				break;
+		String name = element.getName();
+		if(!"sql".equals(name)){
+			List<Attribute> attributes = element.getAttributes();
+			for (Attribute attribute : attributes) {
+				String attrKey = "id";
+				if(replaceAttrValueExample2Condition(attribute, attrKey)){
+					break;
+				}
 			}
+
 		}
-		List<Element> elements = element.getElements();
+		/*List<Element> elements = element.getElements();
 		for (Element element_sub : elements) {
 			if(element_sub instanceof XmlElement){
 				XmlElement xmlElement = (XmlElement) element_sub;
@@ -248,7 +254,7 @@ public class DefMapperAndSqlMapGenerator extends PluginAdapter {
 					}
 				}
 			}
-		}
+		}*/
 
 	}
 

@@ -29,7 +29,7 @@ public class BaseServerInfo implements Serializable {
     private String serverName;
 
     /**
-     * 创建人 : base_server_info.create_user
+     * base_server_info.create_user
      *
      * @mbg.generated
      */

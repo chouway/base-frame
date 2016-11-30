@@ -3,6 +3,7 @@ package com.base.platform.dubbo.dao.mgb;
 import com.base.platform.dubbo.domain.BaseServerConsumeRel;
 import com.base.platform.dubbo.domain.BaseServerConsumeRelCondition;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BaseServerConsumeRelDao {
     /**
@@ -10,6 +11,12 @@ public interface BaseServerConsumeRelDao {
      * @mbg.generated
      */
     long countByCondition(BaseServerConsumeRelCondition condition);
+
+    /**
+     *
+     * @mbg.generated
+     */
+    int deleteByCondition(BaseServerConsumeRelCondition condition);
 
     /**
      *
@@ -40,6 +47,12 @@ public interface BaseServerConsumeRelDao {
      * @mbg.generated
      */
     BaseServerConsumeRel selectByPrimaryKey(String id);
+
+    /**
+     *
+     * @mbg.generated
+     */
+    int updateByCondition(@Param("record") BaseServerConsumeRel record, @Param("example") BaseServerConsumeRelCondition condition);
 
     /**
      *

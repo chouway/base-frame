@@ -1,0 +1,1 @@
+dubboLogServiceFilter=com.base.framwork.log.DubboLogServiceFilter
