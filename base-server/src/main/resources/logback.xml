@@ -4,6 +4,7 @@
     <substitutionProperty name="logDirectory" value="/data/log/base"/>
     <substitutionProperty name="logFileName" value="base"/>
     <substitutionProperty name="logFileMaxHistoryCount" value="3"/>
+    <substitutionProperty name="logLevell" value="INFO"/>
 
     <!--simple:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger[%M %line]:%msg%n -->
     <!--complex:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'(Caller\+0\s+at\s+)|(\r\n)', ''}%msg%n -->
@@ -68,14 +69,14 @@
             <pattern>${logPattern}</pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>${logLeve}</level>
+            <level>${logLevel}</level>
         </filter>
     </appender>
 
     <!-- 输出到控制台和文件，可定义更多的 Appender -->
     <!-- 日志级别ALL,TRACE,DEBUG,INFO,WARN,ERROR,OFF -->
     <!-- 控制台 begin -->
-    <root level="${logLeve}">
+    <root level="${logLevel}">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE-LOG"/>
         <appender-ref ref="FILE-ERROR"/>
@@ -83,26 +84,11 @@
     <!-- 控制台 end -->
 
     <!-- 当前项目 begin -->
-    <logger name="com.base.test" additivity="true" level="${logLeve}">
+    <logger name="com.base.test" additivity="true" level="${logLevel}">
         <appender-ref ref="FILE-WARN"/>
         <appender-ref ref="FILE-ERROR"/>
     </logger>
-    <!--<logger name="org" additivity="true" level="${logLeve}">
-        <appender-ref ref="FILE-WARN"/>
-        <appender-ref ref="FILE-ERROR"/>
-    </logger>
-    <logger name="ch" additivity="true" level="${logLeve}">
-        <appender-ref ref="FILE-WARN"/>
-        <appender-ref ref="FILE-ERROR"/>
-    </logger>
-    <logger name="java" additivity="true" level="${logLeve}">
-        <appender-ref ref="FILE-WARN"/>
-        <appender-ref ref="FILE-ERROR"/>
-    </logger>
-    <logger name="net" additivity="true" level="${logLeve}">
-        <appender-ref ref="FILE-WARN"/>
-        <appender-ref ref="FILE-ERROR"/>
-    </logger>-->
 
+    <logger name="org" level="INFO"/>
     <!-- 当前项目 end -->
 </configuration>

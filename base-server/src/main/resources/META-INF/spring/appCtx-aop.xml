@@ -11,11 +11,13 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 	<description>AOP配置</description>
 	<!-- 开启注解支持(注解由专门的配置文件加载) -->
+	<!--
 	<context:component-scan base-package="com.base.platform" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
 	</context:component-scan>
+	-->
 	<!-- 声明自动为spring容器中那些配置@aspectJ切面的bean创建代理，织入切面 -->
 	<aop:aspectj-autoproxy/>
 </beans>

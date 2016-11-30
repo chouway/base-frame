@@ -11,11 +11,7 @@ import org.junit.Test;
 public class DubboMain extends CommonTest {
 
     @Test
-    public void main() throws InterruptedException {
-        long sleepT = 60*1000*5l;
-        logger.info("sleep STR-->sleepT={}", sleepT);
+    public void main(){
         com.alibaba.dubbo.container.Main.main(null);
-        Thread.sleep(sleepT);
-        logger.info("sleep END-->sleepT={}", sleepT);
     }
 }
