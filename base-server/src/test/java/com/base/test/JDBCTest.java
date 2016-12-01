@@ -1,8 +1,9 @@
 package com.base.test;
 
+import com.alibaba.fastjson.JSON;
 import com.base.framwork.CommonTest;
-import com.base.framwork.context.BaseService;
 import com.base.framwork.context.SpringContextUtil;
+import com.intellij.psi.IntentionFilterOwner;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 
 /**
  * JDBCTest
@@ -31,6 +33,7 @@ public class JDBCTest extends CommonTest {
         Connection connection = sqlSession.getConnection();
         DatabaseMetaData metaData = connection.getMetaData();
         logger.info("-->metaData={}", metaData);
-
+        logger.info("-->md.url={}", metaData.getURL());
+        logger.info("-->md.username={}", metaData.getUserName());
     }
 }

@@ -4,6 +4,7 @@
     <substitutionProperty name="logDirectory" value="/data/log/base-web"/>
     <substitutionProperty name="logFileName" value="baseWeb"/>
     <substitutionProperty name="logFileMaxHistoryCount" value="3"/>
+    <substitutionProperty name="logLevel" value="INFO"/>
 
     <!--simple:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger[%M %line]:%msg%n -->
     <!--complex:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'(Caller\+0\s+at\s+)|(\r\n)', ''}%msg%n -->
@@ -83,10 +84,10 @@
     <!-- 控制台 end -->
 
     <!-- 当前项目 begin -->
-    <!--
-    <logger name="com.base.test" additivity="true" level="${logLeve}">
+    <logger name="com.base" additivity="true" level="${logLeve}">
         <appender-ref ref="FILE-WARN"/>
         <appender-ref ref="FILE-ERROR"/>
-    </logger>-->
+    </logger>
+    <logger name="org" level="INFO"/>
     <!-- 当前项目 end -->
 </configuration>

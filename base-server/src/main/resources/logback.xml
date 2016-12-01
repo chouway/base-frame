@@ -4,7 +4,7 @@
     <substitutionProperty name="logDirectory" value="/data/log/base"/>
     <substitutionProperty name="logFileName" value="base"/>
     <substitutionProperty name="logFileMaxHistoryCount" value="3"/>
-    <substitutionProperty name="logLevell" value="INFO"/>
+    <substitutionProperty name="logLevel" value="INFO"/>
 
     <!--simple:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger[%M %line]:%msg%n -->
     <!--complex:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'(Caller\+0\s+at\s+)|(\r\n)', ''}%msg%n -->

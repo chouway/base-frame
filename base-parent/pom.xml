@@ -16,7 +16,7 @@
         <module>../base-server</module>
         <module>../base-common</module>
         <module>../base-simple</module>
-        <!--<module>../base-web</module>-->
+        <module>../base-web</module>
     </modules>
 
     <properties>

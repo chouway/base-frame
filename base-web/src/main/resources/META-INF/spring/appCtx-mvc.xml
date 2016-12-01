@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	<description>Mvc部分配置</description>
+	<!-- 开启注解支持 -->
+	<context:component-scan base-package="com.base.platform" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	<mvc:annotation-driven />
+
+	<!--
+	<bean id="microFinaceObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+	 <property name="targetObject" ref="microFinaceObjectMapper" />
+	 <property name="targetMethod" value="configure" />
+	 <property name="arguments">
+	  <list>
+	   <value type="org.codehaus.jackson.map.DeserializationConfig.Feature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+	   <value>false</value>
+	  </list>
+	 </property>
+	</bean>
+	&lt;!&ndash; spring mvc json框架对象映射 配置类 &ndash;&gt;
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<list>
+				<bean class="com.onlyou.framework.spring.format.DateFormater"/>
+			</list>
+		</property>
+	</bean>
+	<mvc:interceptors>
+		<bean class="com.onlyou.framework.spring.web.servlet.handler.DataHandlerInterceptor"/>
+	</mvc:interceptors>
+	&lt;!&ndash; 定义首页 &ndash;&gt;
+	<mvc:view-controller path="/" view-name="redirect:/index.htm" />
+	<mvc:view-controller path="error.htm" view-name="error"/>
+	&lt;!&ndash; 定义JSP &ndash;&gt;
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	&lt;!&ndash; 支持上传文件 &ndash;&gt;
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760"/>&lt;!&ndash; 大小不超过10M &ndash;&gt;
+        <property name="defaultEncoding" value="utf-8" />
+	</bean>
+	
+	<bean id="exceptionResolver" class="com.onlyou.framework.log.LogExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Throwable">error</prop>                
+            </props>
+        </property>
+    </bean>
+    -->
+</beans>

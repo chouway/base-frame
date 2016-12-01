@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+		xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	default-lazy-init="true">
+	<!-- Dubbo配置 -->
+	<!-- 应用名称 -->
+	<dubbo:application name="base-web"/>
+	<!-- zookeeper registry center address -->
+	<dubbo:registry address="${mvn.zookeeper.address}" id="onlyou" default="true"/>
+	<!-- 监控配置
+	<dubbo:monitor protocol="registry"/>
+	-->
+	<dubbo:consumer timeout="100000" filter="ReferenceFilter" registry="onlyou,onlyou_ext" check="false"/>
+
+	<!-- 配置dubbo直连文件（开发环境使用，日构建取消） -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" value="#{@systemProperties}" />
+		<property name="targetMethod" value="putAll" />
+		<property name="arguments">
+			<util:properties location="${mvn.dubboResolvePropertiesFile}" />
+		</property>
+	</bean>
+</beans>
