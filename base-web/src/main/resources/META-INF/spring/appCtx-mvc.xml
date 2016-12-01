@@ -12,56 +12,106 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	<description>Mvc部分配置</description>
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
+	<mvc:default-servlet-handler/>
+	<!-- 定义无需Controller的url<->view直接映射 -->
+	<mvc:view-controller path="/" view-name="redirect:/"/>
+
 	<!-- 开启注解支持 -->
 	<context:component-scan base-package="com.base.platform" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
-	<mvc:annotation-driven />
 
-	<!--
-	<bean id="microFinaceObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-	 <property name="targetObject" ref="microFinaceObjectMapper" />
-	 <property name="targetMethod" value="configure" />
-	 <property name="arguments">
-	  <list>
-	   <value type="org.codehaus.jackson.map.DeserializationConfig.Feature">FAIL_ON_UNKNOWN_PROPERTIES</value>
-	   <value>false</value>
-	  </list>
-	 </property>
-	</bean>
-	&lt;!&ndash; spring mvc json框架对象映射 配置类 &ndash;&gt;
-	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="formatters">
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<ref bean="stringHttpMessageConverter" />
+			<ref bean="fastJsonHttpMessageConverter" />
+			<!-- <ref bean="marshallingHttpMessageConverter" /> -->
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="stringHttpMessageConverter"
+		  class="org.springframework.http.converter.StringHttpMessageConverter">
+		<constructor-arg value="UTF-8" index="0"></constructor-arg>
+		<!-- 避免出现乱码 -->
+		<property name="supportedMediaTypes">
 			<list>
-				<bean class="com.onlyou.framework.spring.format.DateFormater"/>
+				<value>text/plain;charset=UTF-8</value>
 			</list>
 		</property>
 	</bean>
-	<mvc:interceptors>
-		<bean class="com.onlyou.framework.spring.web.servlet.handler.DataHandlerInterceptor"/>
-	</mvc:interceptors>
-	&lt;!&ndash; 定义首页 &ndash;&gt;
-	<mvc:view-controller path="/" view-name="redirect:/index.htm" />
-	<mvc:view-controller path="error.htm" view-name="error"/>
-	&lt;!&ndash; 定义JSP &ndash;&gt;
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".jsp"/>
+	<bean id="fastJsonHttpMessageConverter"
+		  class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value><!-- 避免IE出现下载JSON文件的情况 -->
+			</list>
+		</property>
+		<property name="features">
+			<util:list>
+				<!-- <value>WriteMapNullValue</value> -->
+				<value>QuoteFieldNames</value>
+				<value>WriteDateUseDateFormat</value>
+			</util:list>
+		</property>
 	</bean>
-	&lt;!&ndash; 支持上传文件 &ndash;&gt;
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="10485760"/>&lt;!&ndash; 大小不超过10M &ndash;&gt;
-        <property name="defaultEncoding" value="utf-8" />
+
+
+
+	<!-- 返回类型定义 -->
+	<util:list id="messageConverters">
+		<ref bean="stringHttpMessageConverter" />
+		<ref bean="fastJsonHttpMessageConverter" />
+		<!-- <ref bean="marshallingHttpMessageConverter" /> -->
+	</util:list>
+
+
+	<bean id="messageSource"
+		  class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"></property>
 	</bean>
-	
-	<bean id="exceptionResolver" class="com.onlyou.framework.log.LogExceptionResolver">
-        <property name="exceptionMappings">
-            <props>
-                <prop key="java.lang.Throwable">error</prop>                
-            </props>
-        </property>
-    </bean>
-    -->
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 ,这里注掉，   采用velocity语法视图
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/template/" />
+            <property name="suffix" value=".html" />
+        </bean>-->
+
+
+	<!-- 支持上传文件 -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<!-- restTemplate -->
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="messageConverters" ref="messageConverters">
+		</property>
+	</bean>
+
+
+
+	<!-- velocity配置 -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="configLocation" value="classpath:properties/velocity.properties" />
+		<property name="resourceLoaderPath" value="/WEB-INF/template/" />
+	</bean>
+	<!-- velocity视图处理器 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<!-- <property name="prefix" value="/" />视图文件的前缀，即存放的路径 -->
+		<!-- <property name="suffix" value=".html" />视图文件的后缀名 -->
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="requestContextAttribute" value="request" />
+		<property name="numberToolAttribute" value="number" />
+		<property name="dateToolAttribute" value="date" />
+		<property name="cache" value="true" />
+		<property name="order" value="1" />
+	<!--<property name="toolboxConfigLocation" value="/WEB-INF/velocityToolBox.xml" />-->
+		<property name="toolboxConfigLocation" value="/WEB-INF/velocityToolBox.xml" />
+		<property name="viewClass" value="com.base.velocity.MyVelocityToolboxView"/>
+	</bean>
+
 </beans>

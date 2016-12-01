@@ -13,4 +13,15 @@ public class StringUtils {
         chars[0] -=32;
         return String.valueOf(chars);
     }
+
+    public static boolean isEmpty(String source){
+        if(source==null||"".equals(source.trim())){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNotEmpty(String source){
+        return !isEmpty(source);
+    }
 }

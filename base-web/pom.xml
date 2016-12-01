@@ -53,6 +53,55 @@
         </dependency>
         <!-- log tool END -->
 
+        <!--spring STR-->
+        
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <!--spring END-->
 
         <!--shiro STR-->
         <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
@@ -62,19 +111,6 @@
             <version>1.3.2</version>
         </dependency>
         <!--shiro END-->
-        <!--postgres STR-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-simple</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!--postgres END-->
 
         <!-- druid START-->
         <dependency>
@@ -83,5 +119,130 @@
             <version>${druid.version}</version>
         </dependency>
         <!-- druid END -->
+
+        <dependency>
+            <groupId>com.base</groupId>
+            <artifactId>base-api</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+        <finalName>${project.artifactId}</finalName>
+        <filters>
+            <filter>src/main/resources/maven_build/${environmentProperties}</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>maven_build/**/*</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <!--<useFileMappedBuffer>false</useFileMappedBuffer>-->
+                    <stopKey>stop</stopKey>
+                    <stopPort>8089</stopPort>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>spring.profiles.active</name>
+                            <value>development</value>
+                        </systemProperty>
+                    </systemProperties>
+                    <useTestClasspath>true</useTestClasspath>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                        <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
+                        <defaultsDescriptor>src/test/resources/webdefault.xml</defaultsDescriptor>
+
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <!-- 开发环境为windows系统将生效 -->
+            <id>dev-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <!-- 环境配置文件 -->
+                <environmentProperties>dev.properties</environmentProperties>
+                <!--静态资源版本 -->
+                <mvn.staticResourceVersion>windows</mvn.staticResourceVersion>
+            </properties>
+        </profile>
+        <profile>
+            <id>package</id>
+            <properties>
+                <!-- 环境配置文件(参数方式: -DenvironmentProperties=02_test.properties ) -->
+                <environmentProperties>xxx.properties</environmentProperties>
+                <!--静态资源版本[由buildnumber-maven-plugin提供] -->
+                <mvn.staticResourceVersion>${maven.build.timestamp}</mvn.staticResourceVersion>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>buildnumber-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <!-- 生成一个运行时变量${timestamp} -->
+                                    <goal>create-timestamp</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <!-- 压缩js&css静态资源 -->
+                        <executions>
+                            <execution>
+                                <id>install_node_and_npm</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>npm_install</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>gulp_compress</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>gulp</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>compressJsCss --gulpfile gulp-compress.js</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
 </project>
