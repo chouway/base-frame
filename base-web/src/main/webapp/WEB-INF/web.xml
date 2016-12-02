@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>platform</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-			classpath:/spring/appCtx-dubbo.xml
-			classpath:/spring/appCtx-aop.xml
-			classpath:/spring/appCtx-base.xml
-			classpath:/spring/appCtx-cache.xml
-			classpath:/spring/appCtx-shiro.xml
+			classpath:META-INF/spring/appCtx-base.xml
+			classpath:META-INF/spring/appCtx-dubbo.xml
+			classpath:META-INF/spring/appCtx-aop.xml
+			classpath:META-INF/spring/appCtx-cache.xml
+			<!--classpath:META-INF/spring/appCtx-shiro.xml-->
       </param-value>
   </context-param>
   <listener>
@@ -151,7 +151,7 @@
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring/appCtx-mvc.xml</param-value>
+      <param-value>classpath:META-INF/spring/appCtx-mvc.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -193,13 +193,4 @@
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
-	<jsp-config>
-		<!--定义标签库-->
-		<taglib>
-			<!--确定标签库的URI-->
-			<taglib-uri>http://platform.onlyou.com/tags/error</taglib-uri>
-			<!-- 确定标签库定义文件的位置 -->
-			<taglib-location>/WEB-INF/tlds/platform.tld</taglib-location>
-		</taglib>
-	</jsp-config>
 </web-app>

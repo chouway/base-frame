@@ -1,0 +1,85 @@
+ .paypop{
+
+ }
+ .paypop-warp{
+     display:none;
+     position: fixed;
+     z-index: 9002;
+     min-width: 300px;
+     max-height:500px;
+     padding: 5px 20px;
+     background-color: #fff;
+     box-shadow: 0 4px 16px rgba(0,0,0,0.36);
+     -webkit-box-shadow: 0 4px 16px rgba(0,0,0,0.36);
+     font: 16px/150% '\5FAE\8F6F\96C5\9ED1', Verdana, Arial, Helvetica, sans-serif
+ }
+ .paypop-header{
+     position: relative;
+     padding: 0;
+     margin: 16px 0;
+ }
+ .paypop-header:before, .paypop-header:after {
+     content: " ";
+     display: table;
+ }
+ .paypop-header h2{
+     font-size: 18px;
+     font-weight: bold;
+     padding: 10px 0;
+     text-align: left;
+ }
+ .paypop-content{
+     position: relative;
+     padding: 5px 10px;
+     text-align: center;
+     max-height: 300px;
+     max-width: 600px;
+     overflow: auto;
+ }
+ .paypop-footer{
+     text-align: center;
+     padding: 30px 0 20px 0;
+ }
+ .paypop-btn-cancel{
+     border: 1px solid #bdc3d1;
+ }
+ .paypop-btn-ok{
+     margin-left: 20px;
+     background-color: #68abf7;
+     color: #fff !important;
+ }
+ .paypop-footer a{
+     display: inline-block;
+     margin-bottom: 0;
+     text-align: center;
+     vertical-align: middle;
+     cursor: pointer;
+     background-image: none;
+     color: #696c74;
+     min-width: 80px;
+     /*border: 1px solid transparent;*/
+     border-radius: 3px;
+     white-space: nowrap;
+     padding: 7px 13px;
+     font-weight: normal;
+     font-size: 16px;
+     transition: background 0.15s,color 0.15s,border 0.15s;
+     -webkit-transition: background 0.15s,color 0.15s,border 0.15s;
+     -moz-transition: background 0.15s,color 0.15s,border 0.15s;
+     -ms-transition: background 0.15s,color 0.15s,border 0.15s;
+     -o-transition: background 0.15s,color 0.15s,border 0.15s;
+ }
+ .paypop-mask {
+     display: block;
+     width: 100%;
+     height: 100%;
+     position: fixed;
+     left: 0;
+     right: 0;
+     top: 0;
+     bottom: 0;
+     z-index: 9001;
+     background-color: #000;
+     opacity: .3;
+     filter: alpha(opacity=30);
+ }

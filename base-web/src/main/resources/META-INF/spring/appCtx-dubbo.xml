@@ -10,11 +10,11 @@
 	<!-- 应用名称 -->
 	<dubbo:application name="base-web"/>
 	<!-- zookeeper registry center address -->
-	<dubbo:registry address="${mvn.zookeeper.address}" id="onlyou" default="true"/>
+	<dubbo:registry address="${mvn.zookeeper.address}" id="base" default="true"/>
 	<!-- 监控配置
 	<dubbo:monitor protocol="registry"/>
 	-->
-	<dubbo:consumer timeout="100000" filter="ReferenceFilter" registry="onlyou,onlyou_ext" check="false"/>
+	<!--<dubbo:consumer timeout="100000" filter="ReferenceFilter" registry="base-server" check="false"/>-->
 
 	<!-- 配置dubbo直连文件（开发环境使用，日构建取消） -->
 	<bean

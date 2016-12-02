@@ -1,0 +1,18 @@
+.colCopy {
+	font-size: 12px;
+	height:25px;
+	line-height: 25px;
+	background: #fafafa;
+	border: 1px solid #ccc;
+	padding: 5px 20px;
+	overflow: hidden;
+	}
+.laygrid{
+    overflow: auto;
+}
+.shdiv{
+    display: none;
+}
+.thover{
+    background: #f8f8f8;
+}

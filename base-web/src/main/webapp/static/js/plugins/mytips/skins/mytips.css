@@ -1,0 +1,60 @@
+.jquery-mytips{
+	border: 1px solid #FF0000;
+    padding: 4px 20px 4px 8px;
+    display: none;
+	position: absolute;
+	line-height: 20px;
+	color: #dd4a38;
+	background-color: #FFFFFF;
+	z-index: 9999;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.mytipsleft{
+  background-color: #fffeee;
+  border: 1px solid #f4e0d0;
+}
+.jquery-mytips .jquery-mytips-span{
+     display: block;
+     overflow:hidden;
+     position:absolute;
+     height:8px;
+     width:17px;
+     left:10px;
+     bottom:-8px;
+ }
+.mytipsleft .jquery-mytips-span{
+     height: 17px;
+     width: 8px;
+     left: -8px;
+     top: 18%;
+ }
+ .jquery-mytips s{
+   font-family:simsun;
+   font-size:16px;
+   height:19px;
+   left:0;
+   line-height:21px;
+   position:absolute;
+   text-decoration:none;
+ }
+ .jquery-mytips .jquery-mytips-s1{
+   top:-9px;
+   width:17px;
+   color:#FF0000;
+ }
+ .mytipsleft .jquery-mytips-s1{
+   left:0;
+   top:0;
+   color: #f4e0d0;
+ }
+ .jquery-mytips .jquery-mytips-s2{
+    top:-10px;
+    width:17px;
+    color:#FFFFFF;
+ }
+ .mytipsleft .jquery-mytips-s2{
+    left: 1px;
+    top: 0;
+  }

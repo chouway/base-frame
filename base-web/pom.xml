@@ -103,6 +103,14 @@
 
         <!--spring END-->
 
+        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaver.version}</version>
+        </dependency>
+
+
         <!--shiro STR-->
         <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
         <dependency>

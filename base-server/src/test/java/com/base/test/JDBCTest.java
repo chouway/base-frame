@@ -3,7 +3,6 @@ package com.base.test;
 import com.alibaba.fastjson.JSON;
 import com.base.framwork.CommonTest;
 import com.base.framwork.context.SpringContextUtil;
-import com.intellij.psi.IntentionFilterOwner;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;

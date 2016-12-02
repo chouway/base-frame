@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+#set($jspath = "/static/js/page/dubbo/base/server.js")
+#parse("/common/include.html")
+
+<body>
+<h3>Hello World! base-web</h3>
+
+<![CDATA[
+
+    <div>0-->web项目 ctx=$!{ctx}</div>
+
+    <div>1-->取字段 test=$!{test}</div>
+
+    <div>2-->取字段  aaa=$!{aaa} 注： 该值由springMvc 在addAll存进去</div>
+
+    <div>3-->取map取 map=$!{map}</div>
+
+    <div>4-->map中取 map.aaa=$!{map.aaa}</div>
+
+    <div>5-->从bean中取 testTabelOne.testOneId=$!{testTabelOne.testOneId}
+
+    </div>
+
+    <div>6-->自定义方法$!{percent} 使用  util.percent=$util.formatPercent($!{percent})</div>
+
+    <br />
+
+    <div>7-->语法set :  存 # set ($i=1)   取 $ i= $i </div>
+
+    <br />
+
+    <div>8-->语法 遍历List
+
+        #foreach($tem in $!{list})
+        <li>$!{velocityCount}: $tem ,$tem . length = $tem.length</li>
+        #end
+
+        $!{list}.get(0)
+
+    </div>
+
+    <div>9-->语法 遍历map
+        #foreach($data in $map.entrySet())
+        <input type="text" name='${data.key}' index='$!{velocityCount}'  value='${data.value}'/>
+        #end
+    </div>
+
+    <br />
+
+    <div>10-->语法 if else
+        #if('a'=='a')
+        <div># if('a'=='a') <br />
+            # end
+        </div>
+        #end
+
+        <br />
+
+        #if(!('a'!='a'))
+        <div># if(!('a'!='a'))  <br />
+            # end
+        </div>
+        #end
+
+        <br />
+
+        <div>
+            # if()
+            <br />
+            # else
+            <br />
+            # end
+        </div>
+
+        <br />
+
+        <div>
+            # if()
+            <br />
+            # elseif
+            <br />
+            # end
+        </div>
+    </div>
+
+]]>
+
+</body>
+</html>
