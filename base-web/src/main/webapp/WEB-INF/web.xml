@@ -10,7 +10,7 @@
 			classpath:META-INF/spring/appCtx-dubbo-client.xml
 			classpath:META-INF/spring/appCtx-aop.xml
 			classpath:META-INF/spring/appCtx-cache.xml
-            classpath:META-INF/spring/appCtx-mvc.xml
+            <!--classpath:META-INF/spring/appCtx-mvc.xml-->
 			<!--classpath:META-INF/spring/appCtx-shiro.xml-->
       </param-value>
   </context-param>

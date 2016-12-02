@@ -4,26 +4,26 @@
 #parse("/common/include.html")
 
 <body>
-<h3>Hello World! base-web</h3>
+<h3>Hello World! base-web  velocity</h3>
 
-<![CDATA[
+
 
     <div>0-->web项目 ctx=$!{ctx}</div>
 
-    <div>1-->取字段 test=$!{test}</div>
+    <div>1-->取字段 class=$!{class}</div>
 
-    <div>2-->取字段  aaa=$!{aaa} 注： 该值由springMvc 在addAll存进去</div>
+    <div>2-->取字段  method=$!{method} 注： 该值由springMvc 在addAll存进去</div>
 
     <div>3-->取map取 map=$!{map}</div>
 
-    <div>4-->map中取 map.aaa=$!{map.aaa}</div>
+    <div>4-->map中取 map.key_0=$!{map.key_0}</div>
 
     <div>5-->从bean中取 testTabelOne.testOneId=$!{testTabelOne.testOneId}
 
     </div>
 
-    #set($percent = 4.231)
-    <div>6-->自定义方法$!{percent} 使用  util.percent=$!util.formatPercent($!{percent})</div>
+    #set($subStr = 0.231)
+    <div>6-->自定义方法util.subStr(${subStr},4,6) 使用  util.subStr=util.subStr($subStr,4,6)</div>
 
     <br />
 
@@ -32,19 +32,17 @@
     <br />
 
     <div>8-->语法 遍历List
-
         #foreach($tem in $!{list})
-        <li>count=${foreach.count},index=${foreach.index}: $tem ,$tem . length = $tem.length</li>
+        <li>list.size()=${list.size()}, count=${foreach.count},index=${foreach.index}: item=${tem}</li>
         #end
-
-        $!{list}.get(0)
-
+        $!{list}.get(0) = $!{list.get(0)}
     </div>
 
     <div>9-->语法 遍历map
-        #foreach($data in $map.entrySet())
-        <input type="text" name='${data.key}' index='${foreach.index}' count="${foreach.count}" value='${data.value}'/>
+        #foreach($data in $!{map.entrySet()})
+        <input type="text" name='${data.key}' index='${foreach.index}' count="${foreach.count}" value='${data.value}' map_size="${map.size()}"/>
         #end
+
     </div>
 
     <br />
@@ -85,7 +83,7 @@
         </div>
     </div>
 
-]]>
+
 
 </body>
 </html>
