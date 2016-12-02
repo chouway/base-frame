@@ -4,7 +4,7 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd"
 	default-lazy-init="true">
 	<!-- Dubbo配置 -->
 	<!-- 应用名称 -->
