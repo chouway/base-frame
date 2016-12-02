@@ -10,7 +10,7 @@
         <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
     <plugins>
-        <plugin interceptor="com.base.framwork.plugin.page.PageHelper">
+        <plugin interceptor="com.base.framework.plugin.page.PageHelper">
         </plugin>
     </plugins>
 

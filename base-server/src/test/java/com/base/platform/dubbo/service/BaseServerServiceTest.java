@@ -1,8 +1,8 @@
 package com.base.platform.dubbo.service;
 
 import com.alibaba.fastjson.JSON;
-import com.base.framwork.CommonTest;
-import com.base.framwork.bean.page.Page;
+import com.base.framework.CommonTest;
+import com.base.framework.bean.page.Page;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import org.junit.Test;

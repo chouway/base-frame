@@ -7,8 +7,10 @@
     <param-value>
 			classpath:META-INF/spring/appCtx-base.xml
 			classpath:META-INF/spring/appCtx-dubbo.xml
+			classpath:META-INF/spring/appCtx-dubbo-client.xml
 			classpath:META-INF/spring/appCtx-aop.xml
 			classpath:META-INF/spring/appCtx-cache.xml
+            classpath:META-INF/spring/appCtx-mvc.xml
 			<!--classpath:META-INF/spring/appCtx-shiro.xml-->
       </param-value>
   </context-param>
@@ -16,7 +18,7 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
-  <filter>
+  <!--<filter>
     <filter-name>cacheSessionFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     <init-param>
@@ -27,7 +29,7 @@
   <filter-mapping>
     <filter-name>cacheSessionFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -53,37 +55,7 @@
     <url-pattern>*.json</url-pattern>
   </filter-mapping>
 
-
-    <!--
-        <filter>
-            <filter-name>siteFilter</filter-name>
-            <filter-class>com.onlyou.platform.common.filter.SiteFilter</filter-class>
-        </filter>
-        <filter-mapping>
-            <filter-name>siteFilter</filter-name>
-            <url-pattern>*.html</url-pattern>
-        </filter-mapping>
-        <filter-mapping>
-            <filter-name>siteFilter</filter-name>
-            <url-pattern>*.htm</url-pattern>
-        </filter-mapping>
-    <filter-mapping>
-            <filter-name>siteFilter</filter-name>
-            <url-pattern>*.json</url-pattern>
-        </filter-mapping>
-        -->
-
-  <!--
-  <filter>
-      <filter-name>shortUrlFilter</filter-name>
-      <filter-class>com.onlyou.platform.common.filter.ShortUrlFilter</filter-class>
-  </filter>
-  <filter-mapping>
-      <filter-name>shortUrlFilter</filter-name>
-      <url-pattern>*</url-pattern>
-  </filter-mapping>
-  -->
-  <filter>
+ <!-- <filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     <init-param>
@@ -96,9 +68,9 @@
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
-  </filter-mapping>
+  </filter-mapping>-->
 
-  <filter>
+  <!--<filter>
     <filter-name>UserMSGFilter</filter-name>
     <filter-class>com.onlyou.platform.common.filter.UserMSGFilter</filter-class>
   </filter>
@@ -113,10 +85,10 @@
   <filter-mapping>
     <filter-name>UserMSGFilter</filter-name>
     <url-pattern>*.json</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
 
 
-  <filter>
+  <!--<filter>
 		<filter-name>loggingFilter</filter-name>
 		<filter-class>com.onlyou.platform.common.filter.OnlyouWebLoggingFilter</filter-class>
 	</filter>
@@ -131,9 +103,9 @@
 	<filter-mapping>
 		<filter-name>loggingFilter</filter-name>
 		<url-pattern>*.json</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 
-	<filter>
+	<!--<filter>
 		<filter-name>ssoFilter</filter-name>
 		<filter-class>com.onlyou.platform.common.filter.SsoFilter</filter-class>
 	</filter>
@@ -144,7 +116,7 @@
 	<filter-mapping>
 		<filter-name>ssoFilter</filter-name>
 		<url-pattern>*.html</url-pattern>
-	</filter-mapping>   
+	</filter-mapping>   -->
 	  
   <servlet>
     <servlet-name>platform-mvc</servlet-name>

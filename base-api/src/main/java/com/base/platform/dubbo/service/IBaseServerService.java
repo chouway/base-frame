@@ -1,8 +1,8 @@
 package com.base.platform.dubbo.service;
 
 
-import com.base.framwork.bean.page.Page;
-import com.base.framwork.exception.BusinessException;
+import com.base.framework.bean.page.Page;
+import com.base.framework.exception.BusinessException;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 

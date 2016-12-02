@@ -1,8 +1,7 @@
 package com.base.test;
 
-import com.alibaba.fastjson.JSON;
-import com.base.framwork.CommonTest;
-import com.base.framwork.context.SpringContextUtil;
+import com.base.framework.CommonTest;
+import com.base.framework.context.SpringContextUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 
 /**
  * JDBCTest

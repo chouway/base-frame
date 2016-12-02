@@ -1,6 +1,6 @@
 package com.base.test;
 
-import com.base.framwork.CommonTest;
+import com.base.framework.CommonTest;
 import org.junit.Test;
 
 /**

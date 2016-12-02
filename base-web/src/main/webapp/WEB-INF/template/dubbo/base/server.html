@@ -22,7 +22,8 @@
 
     </div>
 
-    <div>6-->自定义方法$!{percent} 使用  util.percent=$util.formatPercent($!{percent})</div>
+    #set($percent = 4.231)
+    <div>6-->自定义方法$!{percent} 使用  util.percent=$!util.formatPercent($!{percent})</div>
 
     <br />
 
@@ -33,7 +34,7 @@
     <div>8-->语法 遍历List
 
         #foreach($tem in $!{list})
-        <li>$!{velocityCount}: $tem ,$tem . length = $tem.length</li>
+        <li>count=${foreach.count},index=${foreach.index}: $tem ,$tem . length = $tem.length</li>
         #end
 
         $!{list}.get(0)
@@ -42,7 +43,7 @@
 
     <div>9-->语法 遍历map
         #foreach($data in $map.entrySet())
-        <input type="text" name='${data.key}' index='$!{velocityCount}'  value='${data.value}'/>
+        <input type="text" name='${data.key}' index='${foreach.index}' count="${foreach.count}" value='${data.value}'/>
         #end
     </div>
 

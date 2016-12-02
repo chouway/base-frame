@@ -1,14 +1,14 @@
 package com.base.platform.dubbo.service;
 
-import com.base.framwork.bean.page.Page;
-import com.base.framwork.exception.BusinessException;
-import com.base.framwork.plugin.page.PageHelper;
+import com.base.framework.bean.page.Page;
+import com.base.framework.exception.BusinessException;
+import com.base.framework.plugin.page.PageHelper;
 import com.base.platform.dubbo.dao.mgb.BaseServerInfoDao;
 import com.base.platform.dubbo.dao.ext.BaseServerInfoDaoExt;
-import com.base.framwork.context.BaseService;
+import com.base.framework.context.BaseService;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
-import com.base.framwork.util.UUIDUtils;
+import com.base.framework.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

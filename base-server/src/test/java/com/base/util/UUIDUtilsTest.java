@@ -1,7 +1,7 @@
 package com.base.util;
 
-import com.base.framwork.CommonTest;
-import com.base.framwork.util.UUIDUtils;
+import com.base.framework.CommonTest;
+import com.base.framework.util.UUIDUtils;
 import org.junit.Test;
 
 /**

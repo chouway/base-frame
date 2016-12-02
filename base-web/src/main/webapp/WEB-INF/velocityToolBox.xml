@@ -6,7 +6,7 @@
 	<data key="foo">this is foo</data>
 	<data key="bar">this is bar.</data>
 	<toolbox scope="application">
-		<tool key="util" class="com.test.utils.VelocityUtil"/>
+		<tool key="util" class="com.base.framework.util.VelocityUtil"/>
 	</toolbox>
 
 </tools>

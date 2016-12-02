@@ -20,7 +20,7 @@
     <!--
     com.mbg.plugin.DefMyBatis3   MyBatis3
     -->
-    <context id="MySQLTables" targetRuntime="com.base.framwork.plugin.mbg.DefMyBatis3" defaultModelType="flat">
+    <context id="MySQLTables" targetRuntime="com.base.framework.plugin.mbg.DefMyBatis3" defaultModelType="flat">
         <property name="mergeable" value="true"></property>
         <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
@@ -28,9 +28,9 @@
                 <property name="searchString" value="Example"/>
                 <property name="replaceString" value="Condition"/>
         </plugin>
-        <plugin type="com.base.framwork.plugin.mbg.DefEntityAnnotation"/>
-        <plugin type="com.base.framwork.plugin.mbg.DefMapperAndSqlMapGenerator"/>
-        <commentGenerator type="com.base.framwork.plugin.mbg.DefCommonGenerator">
+        <plugin type="com.base.framework.plugin.mbg.DefEntityAnnotation"/>
+        <plugin type="com.base.framework.plugin.mbg.DefMapperAndSqlMapGenerator"/>
+        <commentGenerator type="com.base.framework.plugin.mbg.DefCommonGenerator">
             <!-- true:不生成注释，false:生成注释 (其中注释里有个标志 该标志可防止代码重复生成 ，只会更新新加的部分)-->
             <property name="suppressAllComments" value="false"/>
             <!-- 在注释中，true:不显示时间戳 ,false:显示时间戳 -->
