@@ -1,29 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
 #set($jspath = "/static/js/page/dubbo/base/server.js")
-#parse("/common/include.html")
+#parse("/common/include.html")  <!--等效 #include-->
 
 <body>
 <h3>Hello World! base-web  velocity</h3>
 
-
-
     <div>0-->web项目 ctx=$!{ctx}</div>
 
-    <div>1-->取字段 class=$!{class}</div>
+    <div>1-->取字段 filed_str=$!{filed_str}</div>
 
-    <div>2-->取字段  method=$!{method} 注： 该值由springMvc 在addAll存进去</div>
+    <div>2-->取字段  map_field_key=$!{map_field_key} 注： 该值由springMvc 在addAll存进去</div>
 
     <div>3-->取map取 map=$!{map}</div>
 
     <div>4-->map中取 map.key_0=$!{map.key_0}</div>
 
-    <div>5-->从bean中取 testTabelOne.testOneId=$!{testTabelOne.testOneId}
+    <div>5-->从bean中取 baseServerInfo.id=$!{baseServerInfo.id}; baseServerInfo_json=$util.parse2Json($!{baseServerInfo})
 
     </div>
 
-    #set($subStr = 0.231)
-    <div>6-->自定义方法util.subStr(${subStr},4,6) 使用  util.subStr=util.subStr($subStr,4,6)</div>
+    #set($subStr = "123456")
+    <div>6-->自定义方法util.subStr使用  util.subStr(${subStr},4,6)=$util.subStr($subStr,4,6)</div>
 
     <br />
 
@@ -83,7 +81,11 @@
         </div>
     </div>
 
-
+    <script type="application/javascript">
+        var page = {}; page.data = {};
+        page.data.baseServerInfo = $util.parse2Json(${baseServerInfo});
+        console.info("-->page.data.baseServerInfo.id="+page.data.baseServerInfo.id);
+    </script>
 
 </body>
 </html>

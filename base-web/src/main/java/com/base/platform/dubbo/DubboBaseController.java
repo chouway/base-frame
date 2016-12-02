@@ -1,6 +1,7 @@
 package com.base.platform.dubbo;
 
 import com.alibaba.fastjson.JSON;
+import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.service.IBaseServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * BaseController
@@ -32,7 +30,14 @@ public class DubboBaseController {
     @RequestMapping(value = "/server.htm")
     public String init(Model model){
 
-        model.addAttribute("method","method");
+        BaseServerInfo baseServerInfo = new BaseServerInfo();
+        baseServerInfo.setId("test_web_input");
+        baseServerInfo.setServerName("abc");
+        baseServerInfo.setCreateUser("cba");
+        baseServerInfo.setCreateTime(new Date());
+        model.addAttribute("baseServerInfo",baseServerInfo);
+
+        model.addAttribute("filed_str","str");
 
         Map<String,Object> tempMap = new HashMap<String,Object>();
         tempMap.put("map_field_key","map_field_val");

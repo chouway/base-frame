@@ -674,13 +674,11 @@ public class VelocityUtil {
 	 */
 	public String parse2Json(Object bean){
 		try {
-			String json = JSON.toJSONString(bean);
-//			return json.replaceAll("\"", "'");
-			return json;
+			return JSON.toJSONString(bean);//json.replaceAll("\"", "'")
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
 	}
-	
+
 }
