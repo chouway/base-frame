@@ -65,7 +65,7 @@ jQuery.extend({
 		return form;
 	},
 	ajaxFileUpload : function(s) {
-		// TODO introduce global settings, allowing the client to modify them
+		// introduce global settings, allowing the client to modify them
 		// for all requests, not only timeout
 		s = jQuery.extend({}, jQuery.ajaxSettings, s);
 		var id = new Date().getTime();

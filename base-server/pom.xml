@@ -20,15 +20,16 @@
 
         <dependency>
             <groupId>com.base</groupId>
-            <artifactId>base-api</artifactId>
+            <artifactId>base-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
+            <groupId>com.base</groupId>
+            <artifactId>base-api</artifactId>
+            <version>${parent.version}</version>
         </dependency>
+
 
         <!--spring framwork STR-->
 

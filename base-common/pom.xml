@@ -16,24 +16,16 @@
     <version>${parent.version}</version>
 
     <dependencies>
-        <!--mgb STR-->
-        <!--http://www.mybatis.org/generator-->
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-maven-plugin</artifactId>
-            <version>${mgb.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${persistence-api.version}</version>
-        </dependency>
-        <!--mgb END-->
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${persistence-api.version}</version>
         </dependency>
 
         <!-- log tool STR -->
@@ -73,6 +65,16 @@
 
         <!-- provided  STR-->
 
+        <!--mgb STR-->
+        <!--http://www.mybatis.org/generator-->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>${mgb.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--mgb END-->
+
         <!--spring STR-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -109,6 +111,7 @@
             <version>${mybatis-spring.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>

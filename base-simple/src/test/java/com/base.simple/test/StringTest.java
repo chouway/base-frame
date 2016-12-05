@@ -5,6 +5,8 @@ import com.base.simple.common.CommonTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,5 +48,6 @@ public class StringTest extends CommonTest {
     }
     @Test
     public void testCommonStr(){
+
     }
 }

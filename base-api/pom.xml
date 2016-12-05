@@ -26,7 +26,6 @@
     <build>
         <plugins>
             <!-- mybatis generator的插件 -->
-            <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -35,8 +34,7 @@
                 <configuration>
                     <verbose>true</verbose><!-- 罗列明细-->
                     <overwrite>true</overwrite><!-- 覆盖已有文件 -->
-                    <!-- 配置configureFile的路径和名称 -->
-                    <configurationFile>
+                    <configurationFile> <!-- 配置configureFile的路径和名称 -->
                        ${basedir}/src/main/resources/generatorConfig.xml
                     </configurationFile>
                 </configuration>
