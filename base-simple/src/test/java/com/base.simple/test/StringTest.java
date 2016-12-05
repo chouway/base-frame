@@ -2,6 +2,7 @@ package com.base.simple.test;
 
 import com.alibaba.fastjson.JSON;
 import com.base.simple.common.CommonTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -41,10 +42,9 @@ public class StringTest extends CommonTest {
 
             String group = matcher.group(0);
             logger.info("-->group={}", group);
-                                
-
-
         }
-
+    }
+    @Test
+    public void testCommonStr(){
     }
 }

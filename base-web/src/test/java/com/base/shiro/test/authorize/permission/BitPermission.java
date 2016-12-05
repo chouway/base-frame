@@ -1,6 +1,5 @@
 package com.base.shiro.test.authorize.permission;
-
-import com.alibaba.druid.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.Permission;
 
 /**

@@ -30,7 +30,6 @@
         <druid.version>1.0.7</druid.version>
         <mgb.version>1.3.5</mgb.version>
         <aspectjweaver.version>1.8.9</aspectjweaver.version>
-
         <junit.version>4.12</junit.version>
         <slf4j-api.version>1.7.12</slf4j-api.version>
         <jcl-over-slf4j.version>1.7.12</jcl-over-slf4j.version>
@@ -44,6 +43,9 @@
         <velocity-tools.version>2.0</velocity-tools.version>
         <aspectjweaver.version>1.8.9</aspectjweaver.version>
         <commons-fileupload.version>1.2.1</commons-fileupload.version>
+        <shiro-core.version>1.3.2</shiro-core.version>
+        <persistence-api.version>1.0.2</persistence-api.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
     </properties>
 
     <build>
