@@ -1,38 +1,19 @@
-package com.base.simple.test;
+package com.base.simple.freemarker;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 
-import com.base.simple.test.bean.ftl.User;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import org.junit.Test;
-
 /**
- * FreemarkerUtil
+ * FreeeMarkerUtil
  * @author zhouyw
  * @date 2016.12.05
  */
-public class FreemarkerUtilTest {
-
-    @Test
-    public void testftl3() throws Exception {
-        FreemarkerUtilTest util = new FreemarkerUtilTest();
-        Template template = util.getTemplate("ftl/01.ftl");
-        Map<String, Object> map = new HashMap<String, Object>();
-        User user = new User();
-        user.setId(1);
-        user.setName(" You123 ");
-        user.setAge(10);
-        map.put("user", user);
-        template.process(map, new OutputStreamWriter(System.out));
-    }
-
-
+public class FreeMarkerUtil {
 
     /**
      * 根据给定的ftl（freemarker template language）来获得一个用于操作的模板
@@ -89,5 +70,4 @@ public class FreemarkerUtilTest {
         }
 
     }
-
 }

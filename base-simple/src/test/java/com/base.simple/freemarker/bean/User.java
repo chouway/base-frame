@@ -1,4 +1,4 @@
-package com.base.simple.test.bean.ftl;
+package com.base.simple.freemarker.bean;
 import java.io.Serializable;
 /**
  * User
