@@ -12,6 +12,8 @@ import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <b>function:</b> 消息接收者； 依赖hawtbuf-1.9.jar
@@ -26,13 +28,18 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  */
 public class TopicReciever {
 
+    private static Logger logger = LoggerFactory.getLogger(TopicReciever.class);
+
+
+    public static final long SLEEP_TIME = 60 * 1000l;
+
     // tcp 地址
     public static final String BROKER_URL = "tcp://localhost:61616";
     // 目标，在ActiveMQ管理员控制台创建 http://localhost:8161/admin/queues.jsp
     public static final String TARGET = "com.base.simple.activemq.p2s";
 
 
-    public static void run() throws Exception {
+    public static void run(final String id) throws Exception {
 
         TopicConnection connection = null;
         TopicSession session = null;
@@ -49,21 +56,21 @@ public class TopicReciever {
             Topic topic = session.createTopic(TARGET);
             // 创建消息制作者
             TopicSubscriber subscriber = session.createSubscriber(topic);
-
+            logger.info("{},subscriber={}",id ,subscriber);
             subscriber.setMessageListener(new MessageListener() {
                 public void onMessage(Message msg) {
                     if (msg != null) {
                         MapMessage map = (MapMessage) msg;
                         try {
-                            System.out.println(map.getLong("time") + "接收#" + map.getString("text"));
+                            System.out.println(id + "-" +map.getLong("time") + "接收#" + map.getString("text"));
                         } catch (JMSException e) {
                             e.printStackTrace();
                         }
                     }
                 }
             });
-            // 休眠100ms再关闭
-            Thread.sleep(1000 * 100);
+            // 休眠xx ms再关闭
+            Thread.sleep(SLEEP_TIME);
 
             // 提交会话
             session.commit();
@@ -82,6 +89,21 @@ public class TopicReciever {
     }
 
     public static void main(String[] args) throws Exception {
-        TopicReciever.run();
+        threadRun("id_0");
+        threadRun("id_1");
+    }
+
+    private static void threadRun(final String id) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TopicReciever.run(id);
+                } catch (Exception e) {
+                    logger.error("threadRun error={}",e.getMessage(), e);
+                }
+            }
+        });
+        thread.start();
     }
 }

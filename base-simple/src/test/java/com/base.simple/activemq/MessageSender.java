@@ -41,7 +41,7 @@ public class MessageSender {
         for (int i = 0; i < SEND_NUM; i++) {
             String message = "发送消息第" + (i + 1) + "条";
             TextMessage text = session.createTextMessage(message);
-//          text.setStringProperty("JMSXGroupID", "GROUP_ID_0");
+//          text.setStringProperty("JMSXGroupID", "GROUP_ID_0");//message group
             System.out.println(message);
             producer.send(text);
         }

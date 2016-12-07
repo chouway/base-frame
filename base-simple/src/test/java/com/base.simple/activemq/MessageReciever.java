@@ -7,8 +7,14 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+
+import com.alibaba.fastjson.JSON;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQMessageConsumer;
+import org.apache.activemq.ActiveMQPrefetchPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <b>function:</b> 消息接收者
@@ -21,7 +27,11 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @email hoojo_@126.com
  * @version 1.0
  */
-public class MessageReciever {
+public class MessageReciever{
+
+    private static Logger logger = LoggerFactory.getLogger(MessageReciever.class);
+
+
 
     // tcp 地址
     public static final String BROKER_URL = "tcp://localhost:61616";
@@ -42,8 +52,13 @@ public class MessageReciever {
         Connection connection = null;
         Session session = null;
         try {
-            // 创建链接工厂
-            ConnectionFactory factory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, BROKER_URL);
+            // 创建链接工厂  ConnectionFactory
+            ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, BROKER_URL);
+            /*  //性能调优
+            ActiveMQPrefetchPolicy prefetchPolicy = new ActiveMQPrefetchPolicy();
+            prefetchPolicy.setQueuePrefetch(1000);
+            factory.setPrefetchPolicy(prefetchPolicy);*/
+
             // 通过工厂创建一个连接
             connection = factory.createConnection();
             // 启动连接
@@ -53,8 +68,9 @@ public class MessageReciever {
             // 创建一个消息队列
             Destination destination = session.createQueue(DESTINATION);
 
-            // 创建消息消费者
-            MessageConsumer consumer = session.createConsumer(destination);
+            // 创建消息消费者 MessageConsumer
+            ActiveMQMessageConsumer consumer = (ActiveMQMessageConsumer)session.createConsumer(destination);
+            logger.info("{}-->consumer={}",id,JSON.toJSONString(consumer));
 
             int count = 0;
             while (true) {
@@ -90,7 +106,21 @@ public class MessageReciever {
     }
 
     public static void main(String[] args) throws Exception {
-        MessageReciever.run("id_0");
-        MessageReciever.run("id_1");
+        threadRun("id_0");
+        threadRun("id_1");
+    }
+
+    private static void threadRun(final String id) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MessageReciever.run(id);
+                } catch (Exception e) {
+                    logger.error("threadRun error={}",e.getMessage(), e);
+                }
+            }
+        });
+        thread.start();
     }
 }

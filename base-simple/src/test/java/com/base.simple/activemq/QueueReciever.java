@@ -10,6 +10,8 @@ import javax.jms.QueueSession;
 import javax.jms.Session;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -25,6 +27,9 @@ import java.util.Properties;
  * @version 1.0
  */
 public class QueueReciever {
+
+    private static Logger logger = LoggerFactory.getLogger(QueueReciever.class);
+
 
     // tcp 地址
     public static final String BROKER_URL = "tcp://localhost:61616";
@@ -53,7 +58,7 @@ public class QueueReciever {
             // 创建消息接收者
             javax.jms.QueueReceiver receiver = session.createReceiver(queue);
 
-
+            logger.info("{}-->receiver={}",id ,receiver);
             receiver.setMessageListener(new MessageListener() {
                 public void onMessage(Message msg) {
                     if (msg != null) {
@@ -85,7 +90,21 @@ public class QueueReciever {
     }
 
     public static void main(String[] args) throws Exception {
-        QueueReciever.run("id_0");
-        QueueReciever.run("id_1");
+        threadRun("id_0");
+        threadRun("id_1");
+    }
+
+    private static void threadRun(final String id) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    QueueReciever.run(id);
+                } catch (Exception e) {
+                    logger.error("threadRun error={}",e.getMessage(), e);
+                }
+            }
+        });
+        thread.start();
     }
 }
