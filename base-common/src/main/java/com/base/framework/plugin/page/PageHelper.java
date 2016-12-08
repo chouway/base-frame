@@ -49,6 +49,7 @@ public class PageHelper implements Interceptor {
      * @param pageNum
      * @param pageSize
      */
+    @SuppressWarnings("unchecked")
     public static void startPage(Page page) {
         if(page == null) page = new Page();
         localPage.set(page);
@@ -58,6 +59,7 @@ public class PageHelper implements Interceptor {
      * 结束分页并返回结果，该方法必须被调用，否则localPage会一直保存下去，直到下一次startPage
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static Page endPage() {
         Page page = localPage.get();
         localPage.remove();
