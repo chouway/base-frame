@@ -13,6 +13,7 @@ import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.plugin.*;
+import org.springframework.messaging.simp.annotation.SendToUser;
 
 import java.sql.*;
 import java.util.List;
@@ -64,6 +65,7 @@ public class PageHelper implements Interceptor {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object intercept(Invocation invocation) throws Throwable {
         if (localPage.get() == null) {
             return invocation.proceed();

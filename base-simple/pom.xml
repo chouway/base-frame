@@ -22,17 +22,18 @@
             <artifactId>base-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
-        <!-- springMVC4 in favor of  -->
+        <!-- freemarker springMVC4 in favor of  -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
         </dependency>
 
+        <!-- 消息中间件 -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
-            <version>5.14.1</version>
+            <version>${activemq-all.version}</version>
         </dependency>
 
     </dependencies>

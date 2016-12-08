@@ -66,7 +66,6 @@ public class BaseServerService extends BaseService implements IBaseServerService
     @Override
     public List<BaseServerInfo> getExtByMap(Map<String, Object> params) throws BusinessException {
         return this.getDao(BaseServerInfoDaoExt.class).getByMap(params);
-
     }
 
 
