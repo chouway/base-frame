@@ -41,17 +41,16 @@
         <property name="messageConverter" ref="jmsMessageConverter"></property>
     </bean>
 
-    <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
-        <property name="connectionFactory" ref="jmsConnectionFactoryExtend"/>
-    </bean>
-
     <!-- 监听注解支持 -->
+   <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+        <property name="connectionFactory" ref="jmsConnectionFactoryExtend"/>
+    </bean><!--默认的监听容器工厂-->
     <jms:annotation-driven/>
 
    <!-- xml  配置 监听接收消息器 -->
-   <jms:listener-container destination-type="queue" container-type="default" connection-factory="jmsConnectionFactoryExtend" acknowledge="auto" concurrency="5-10">
+   <!--<jms:listener-container destination-type="queue" container-type="default" connection-factory="jmsConnectionFactoryExtend" acknowledge="auto" concurrency="5-10">
         <jms:listener destination="QUEUE_BASE_SERVER_SERVICE" ref="baseServerService" />
-    </jms:listener-container>
+    </jms:listener-container>-->
 
 
 </beans>

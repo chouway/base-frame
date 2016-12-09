@@ -34,7 +34,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class BaseServerService extends BaseService implements IBaseServerService,MessageListener {
+public class BaseServerService extends BaseService implements IBaseServerService{
 
     @Value("${application.preFixedUrl}")
     private String preFixedUrl;
@@ -107,7 +107,7 @@ public class BaseServerService extends BaseService implements IBaseServerService
     }
 
 
-    @Override
+    @JmsListener(destination = DestinationConstant.QUEUE_BASE_SERVER_SERVICE)//def: containerFactory = "jmsListenerContainerFactory"
     public void onMessage(Message message) {
         try{
            logger.info("-->message={}", message.getClass());
