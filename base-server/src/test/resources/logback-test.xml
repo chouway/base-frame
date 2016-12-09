@@ -8,7 +8,7 @@
 
     <!--simple:%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger[%M %line]:%msg%n -->
     <!--complex:%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %replace(%caller{1}){'(Caller\+0\s+at\s+)|(\r\n)', ''}%msg%n -->
-    <substitutionProperty name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'(Caller\\+0\\s+at\\s+)|(\\r\\n)', ''}%msg%n"/>
+    <substitutionProperty name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger[%M %line]:%msg%n"/>
     <!-- 日志目录 end -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 可以指定字符集，对于中文输出有意义 -->

@@ -13,8 +13,6 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Properties;
-
 /**
  * <b>function:</b> 消息接收者； 依赖hawtbuf-1.9.jar
  * @author hoojo
@@ -26,9 +24,9 @@ import java.util.Properties;
  * @email hoojo_@126.com
  * @version 1.0
  */
-public class QueueReciever {
+public class QueueReceiver {
 
-    private static Logger logger = LoggerFactory.getLogger(QueueReciever.class);
+    private static Logger logger = LoggerFactory.getLogger(QueueReceiver.class);
 
 
     // tcp 地址
@@ -99,7 +97,7 @@ public class QueueReciever {
             @Override
             public void run() {
                 try {
-                    QueueReciever.run(id);
+                    QueueReceiver.run(id);
                 } catch (Exception e) {
                     logger.error("threadRun error={}",e.getMessage(), e);
                 }

@@ -40,7 +40,29 @@ public interface IBaseServerService {
      */
     long countServer(BaseServerInfoCondition condition);
 
+    /**
+     * Get ext by map
+     * createby zhouyw on 2016.12.09
+     * @param params
+     * @return list
+     * @throws BusinessException
+     */
     List<BaseServerInfo> getExtByMap(Map<String,Object> params)throws BusinessException;
 
+    /**
+     * Get ext by page
+     * createby zhouyw on 2016.12.09
+     * @param params
+     * @param page
+     * @return page
+     * @throws BusinessException
+     */
     Page<BaseServerInfo> getExtByPage(Map<String,Object> params, Page page)throws BusinessException;
+
+    /**
+     * Deal need msg busi 处理需要消息队列处理的业务
+     * createby zhouyw on 2016.12.09
+     * @throws BusinessException
+     */
+    void dealNeedMsgBusi()throws BusinessException;
 }

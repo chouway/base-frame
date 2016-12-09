@@ -1,10 +1,8 @@
 package com.base.simple.activemq;
 
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -12,7 +10,6 @@ import com.alibaba.fastjson.JSON;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQMessageConsumer;
-import org.apache.activemq.ActiveMQPrefetchPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +24,9 @@ import org.slf4j.LoggerFactory;
  * @email hoojo_@126.com
  * @version 1.0
  */
-public class MessageReciever{
+public class MessageReceiver {
 
-    private static Logger logger = LoggerFactory.getLogger(MessageReciever.class);
+    private static Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
 
 
 
@@ -115,7 +112,7 @@ public class MessageReciever{
             @Override
             public void run() {
                 try {
-                    MessageReciever.run(id);
+                    MessageReceiver.run(id);
                 } catch (Exception e) {
                     logger.error("threadRun error={}",e.getMessage(), e);
                 }

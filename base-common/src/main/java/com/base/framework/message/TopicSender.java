@@ -14,9 +14,8 @@ import javax.jms.Session;
  * @author zhouyw
  * @date 2016.12.08
  */
-@Resource
 @Component("topicSender")
-public class TopicSender {
+public class TopicSender implements ITopicSender{
 
     @Resource(name="jmsTopicTemplate")
     private JmsTemplate jmsTemplate;
@@ -25,6 +24,7 @@ public class TopicSender {
      * @param queueName 队列名称
      * @param message 消息内容
      */
+    @Override
     public void publish(String destination,final Object message){
         jmsTemplate.send(destination, new MessageCreator() {
             @Override

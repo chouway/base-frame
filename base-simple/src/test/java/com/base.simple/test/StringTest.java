@@ -5,6 +5,8 @@ import com.base.simple.common.CommonTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,8 +48,21 @@ public class StringTest extends CommonTest {
             logger.info("-->group={}", group);
         }
     }
+    
     @Test
     public void testCommonStr(){
-
+        String canonicalName = this.getClass().getCanonicalName();
+        logger.info("-->canonicalName={}", canonicalName);
+        
+    }
+    
+    @Test
+    public void urlEncode() throws UnsupportedEncodingException {
+        String appInfo = "{\"abc\":1}";
+//      String appInfo = null;//encode null  thrsb:NullPointerException
+        logger.info("-->appInfo={}", appInfo);
+        String encode = URLEncoder.encode(appInfo, "UTF-8");
+        logger.info("-->encode={}", encode);//%7B%22abc%22%3A1%7D
+        
     }
 }

@@ -14,12 +14,13 @@ import javax.jms.Session;
  * @author zhouyw
  * @date 2016.12.08
  */
-@Resource
 @Component("queueSender")
-public class QueueSender {
+public class QueueSender implements IQueueSender{
 
     @Resource(name = "jmsQueueTemplate")
     private JmsTemplate jmsTemplate;// 通过@Qualifier修饰符来注入对应的bean
+
+    @Override
     public void send(String destination, final Object message) {
         jmsTemplate.send(destination, new MessageCreator() {
             @Override

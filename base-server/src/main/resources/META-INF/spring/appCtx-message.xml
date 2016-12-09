@@ -11,7 +11,13 @@
 		http://activemq.apache.org/schema/core
 		http://activemq.apache.org/schema/core/activemq-core.xsd">
 
-    <amq:connectionFactory id="jmsConnectionFactory" brokerURL="tcp://${activemq.ip}:${activemq.port}" userName="${activemq.username}" password="${activemq.password}" />
+    <amq:connectionFactory id="jmsConnectionFactory" brokerURL="${activemq.ip}:${activemq.port}" userName="${activemq.username}" password="${activemq.password}" >
+        <property name="trustedPackages">
+            <list>
+                <value>com.base.platform</value>
+            </list>
+        </property>
+    </amq:connectionFactory>
     <bean id="jmsConnectionFactoryExtend" class="org.springframework.jms.connection.CachingConnectionFactory">
         <constructor-arg ref="jmsConnectionFactory" />
         <property name="sessionCacheSize" value="100" />
@@ -42,8 +48,10 @@
     <!-- 监听注解支持 -->
     <jms:annotation-driven/>
 
-    <jms:listener-container destination-type="queue" container-type="default" connection-factory="jmsConnectionFactoryExtend" acknowledge="auto" concurrency="5-10">
-        <jms:listener destination="testqueue" ref="queueReciever" />
+   <!-- xml  配置 监听接收消息器 -->
+   <jms:listener-container destination-type="queue" container-type="default" connection-factory="jmsConnectionFactoryExtend" acknowledge="auto" concurrency="5-10">
+        <jms:listener destination="QUEUE_BASE_SERVER_SERVICE" ref="baseServerService" />
     </jms:listener-container>
+
 
 </beans>

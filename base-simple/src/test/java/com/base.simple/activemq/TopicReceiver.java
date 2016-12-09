@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
  * @email hoojo_@126.com
  * @version 1.0
  */
-public class TopicReciever {
+public class TopicReceiver {
 
-    private static Logger logger = LoggerFactory.getLogger(TopicReciever.class);
+    private static Logger logger = LoggerFactory.getLogger(TopicReceiver.class);
 
 
     public static final long SLEEP_TIME = 60 * 1000l;
@@ -98,7 +98,7 @@ public class TopicReciever {
             @Override
             public void run() {
                 try {
-                    TopicReciever.run(id);
+                    TopicReceiver.run(id);
                 } catch (Exception e) {
                     logger.error("threadRun error={}",e.getMessage(), e);
                 }

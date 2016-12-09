@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
@@ -60,6 +62,15 @@ public class DubboBaseController {
 
         Map<String, Object> modelMap = model.asMap();
         logger.info("-->modelMap={}", JSON.toJSONString(modelMap));
+        return "/dubbo/base/server.html";
+    }
+
+    //http://localhost:8090/base-web/dubbo/base/appInfo.htm?appInfo=%7B%22abc%22:1%7D
+    //appInfo={"abc":1}
+    //%7B%22abc%22:1%7D
+    @RequestMapping(value = "/appInfo.htm")
+    public String appInfo(Model model,String appInfo){
+        logger.info("-->appInfo={}", appInfo);
         return "/dubbo/base/server.html";
     }
 }

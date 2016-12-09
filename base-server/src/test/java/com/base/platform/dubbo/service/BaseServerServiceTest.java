@@ -48,7 +48,6 @@ public class BaseServerServiceTest extends CommonTest{
 //      condition.createCriteria().andIdEqualTo("1");
         long countServer = baseServerService.countServer(condition);
         logger.info("-->countServer={}", countServer);
-        
     }
 
     @Test
@@ -66,5 +65,14 @@ public class BaseServerServiceTest extends CommonTest{
         Page<BaseServerInfo> page = new Page<BaseServerInfo>(2, 1);
         Page<BaseServerInfo> extByPage = baseServerService.getExtByPage(params, page);
         logger.info("-->extByPage={}", JSON.toJSONString(extByPage));
+    }
+
+    @Test
+    public void testDealNeedMsgBusi() throws Exception {
+            baseServerService.dealNeedMsgBusi();
+            logger.info("-->testlog1");
+            logger.info("-->testlog2");
+
+            Thread.sleep(10*1000l);
     }
 }

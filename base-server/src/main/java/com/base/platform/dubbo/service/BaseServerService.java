@@ -1,8 +1,11 @@
 package com.base.platform.dubbo.service;
 
+import com.alibaba.fastjson.JSON;
 import com.base.framework.bean.page.Page;
 import com.base.framework.exception.BusinessException;
+import com.base.framework.message.IQueueSender;
 import com.base.framework.plugin.page.PageHelper;
+import com.base.platform.dubbo.constant.DestinationConstant;
 import com.base.platform.dubbo.dao.mgb.BaseServerInfoDao;
 import com.base.platform.dubbo.dao.ext.BaseServerInfoDaoExt;
 import com.base.framework.context.BaseService;
@@ -11,10 +14,16 @@ import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.framework.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +34,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class BaseServerService extends BaseService implements IBaseServerService {
+public class BaseServerService extends BaseService implements IBaseServerService,MessageListener {
 
     @Value("${application.preFixedUrl}")
     private String preFixedUrl;
@@ -37,6 +46,9 @@ public class BaseServerService extends BaseService implements IBaseServerService
 
     @Autowired
     private BaseServerInfoDao baseServerInfoDao;
+
+    @Autowired
+    private IQueueSender queueSender;
 
     @Override
     public Object baseServer(String serverKey) {
@@ -78,4 +90,42 @@ public class BaseServerService extends BaseService implements IBaseServerService
     }
 
 
+    /**
+     * Deal need msg busi 处理需要消息队列处理的业务
+     * createby zhouyw on 2016.12.09
+     * @throws BusinessException
+     */
+    @Override
+    public void dealNeedMsgBusi() throws BusinessException {
+        logger.info("dealNeedMsgBusi-->STR");
+        BaseServerInfo baseServerInfo = new BaseServerInfo();
+        baseServerInfo.setId("test-info-msg-obj");
+        queueSender.send(DestinationConstant.QUEUE_BASE_SERVER_SERVICE,baseServerInfo);
+
+        queueSender.send(DestinationConstant.QUEUE_BASE_SERVER_SERVICE,"test-info-msg-text");
+        logger.info("dealNeedMsgBusi-->END");
+    }
+
+
+    @Override
+    public void onMessage(Message message) {
+        try{
+           logger.info("-->message={}", message.getClass());
+           if(message instanceof TextMessage){
+               TextMessage textMsg = (TextMessage) message;
+               logger.info("receive msg-->textMsg={}", textMsg.getText());
+           }else if(message instanceof ObjectMessage){
+               Serializable object = ((ObjectMessage) message).getObject();
+               logger.info("receive msg-->object={}", JSON.toJSONString(object));
+           }else{   
+               throw new BusinessException("暂未定义的消息类型");
+           }
+        }catch (BusinessException e){
+           logger.error("busi error:{}-->[message]={}",e.getMessage(), message,e);
+           throw e;
+        }catch (Exception e){
+           logger.error("error:{}-->[message]={}",e.getMessage(),message,e);
+           throw new BusinessException("系统错误");   
+        }
+    }
 }
