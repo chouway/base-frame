@@ -6,14 +6,12 @@
 
     <parent>
         <groupId>com.base</groupId>
-        <artifactId>base-parent</artifactId>
+        <artifactId>base-frame</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>${parent.groupId}</groupId>
     <artifactId>base-simple</artifactId>
     <packaging>jar</packaging>
-    <version>${project.parent.version}</version>
 
     <dependencies>
         <dependency>
@@ -21,6 +19,7 @@
             <artifactId>base-common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
         <!-- freemarker springMVC4 in favor of  -->
         <dependency>
             <groupId>org.freemarker</groupId>

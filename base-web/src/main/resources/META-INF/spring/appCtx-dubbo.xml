@@ -8,7 +8,7 @@
 	default-lazy-init="true">
 	<!-- Dubbo配置 -->
 	<!-- 应用名称 -->
-	<dubbo:application name="base-web"/>
+	<dubbo:application name="base-web" logger="slf4j"/>
 	<!-- zookeeper registry center address -->
 	<dubbo:registry address="${mvn.zookeeper.address}" id="base" default="true"/>
 	<!-- 监控配置

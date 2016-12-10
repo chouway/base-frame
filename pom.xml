@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.base</groupId>
-    <artifactId>base-parent</artifactId>
+    <artifactId>base-frame</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!-- parent must declare packaging pom -->
@@ -29,7 +29,7 @@
         <mybatis.version>3.4.1</mybatis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <dubbo.version>2.5.3</dubbo.version>
-        <druid.version>1.0.7</druid.version>
+        <druid.version>1.0.27</druid.version>
         <mgb.version>1.3.5</mgb.version>
         <aspectjweaver.version>1.8.9</aspectjweaver.version>
         <junit.version>4.12</junit.version>
@@ -54,10 +54,29 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
                 <configuration>
                     <source>${java.source.version}</source>
                     <target>${java.target.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
                 </configuration>
             </plugin>
         </plugins>

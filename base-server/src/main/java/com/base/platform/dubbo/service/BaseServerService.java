@@ -108,6 +108,18 @@ public class BaseServerService extends BaseService implements IBaseServerService
         logger.info("dealNeedMsgBusi-->END");
     }
 
+    @Override
+    public void seeFirstMyBatisCache() throws BusinessException {
+        BaseServerInfoCondition condition = new BaseServerInfoCondition();
+        condition.createCriteria();
+        BaseServerInfoDao baseServerInfoDao = this.getDao(BaseServerInfoDao.class);
+        long count_0 = baseServerInfoDao.countByCondition(condition);
+        logger.info("first-->count_0={}", count_0);
+
+        long count_1 = baseServerInfoDao.countByCondition(condition);
+        logger.info("second-->count_1={}", count_1);
+    }
+
 
     @JmsListener(destination = DestinationConstant.QUEUE_BASE_SERVER_SERVICE)//def: containerFactory = "jmsListenerContainerFactory"
     public void onMessage(Message message) {

@@ -2,7 +2,7 @@ package com.base.framework.message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.jms.*;
 
@@ -11,7 +11,7 @@ import javax.jms.*;
  * @author zhouyw
  * @date 2016.12.09
  */
-//@Component("queueReceiver")
+@Service("queueReceiver")
 public class QueueReceiver implements MessageListener {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

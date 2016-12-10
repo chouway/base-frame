@@ -2,7 +2,7 @@ package com.base.framework.message;
 
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
@@ -14,7 +14,7 @@ import javax.jms.Session;
  * @author zhouyw
  * @date 2016.12.08
  */
-@Component("topicSender")
+@Service("topicSender")
 public class TopicSender implements ITopicSender{
 
     @Resource(name="jmsTopicTemplate")

@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
         "classpath:/META-INF/spring/appCtx-aop-tx.xml",
         "classpath:/META-INF/spring/appCtx-base.xml",
         "classpath:/META-INF/spring/appCtx-dao.xml",
+        "classpath:/META-INF/spring/appCtx-dubbo.xml",
         "classpath:/META-INF/spring/appCtx-datasource.xml",
         "classpath:/META-INF/spring/appCtx-message.xml"
 })

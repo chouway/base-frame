@@ -21,7 +21,6 @@ import java.util.Map;
 public class BaseServerServiceTest extends CommonTest{
 
 
-
     @Autowired
     private IBaseServerService baseServerService;
 
@@ -72,5 +71,10 @@ public class BaseServerServiceTest extends CommonTest{
             logger.info("-->testlog2");
 
             Thread.sleep(10*1000l);
+    }
+
+    @Test
+    public void testSeeFirstMyBatisCache() throws Exception {
+        baseServerService.seeFirstMyBatisCache();
     }
 }

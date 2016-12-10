@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志目录 begin -->
-    <substitutionProperty name="logDirectory" value="/data/log/base-web"/>
-    <substitutionProperty name="logFileName" value="baseWeb"/>
-    <substitutionProperty name="logFileMaxHistoryCount" value="3"/>
-    <substitutionProperty name="logLevel" value="INFO"/>
+    <property name="logDirectory" value="/data/log/base-web"/>
+    <property name="logFileName" value="baseWeb"/>
+    <property name="logFileMaxHistoryCount" value="3"/>
+    <property name="logLevel" value="INFO"/>
 
     <!--simple:%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger[%M %line]:%msg%n -->
     <!--complex:%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'(Caller\+0\s+at\s+)|(\r\n)', ''}%msg%n -->
-    <substitutionProperty name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger[%M %line]:%msg%n"/>
+    <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger[%M %line]:%msg%n"/>
     <!-- 日志目录 end -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- encoder 可以指定字符集，对于中文输出有意义 -->
-        <Encoding>UTF-8</Encoding>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <!-- Formatted output:  -->
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <pattern>${logPattern}</pattern>
-        </layout>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${logPattern}</pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
     </appender>
     <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <Encoding>UTF-8</Encoding>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logDirectory}/${logFileName}.error.log.%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>${logFileMaxHistoryCount}</MaxHistory>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <!-- Formatted output: -->
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <pattern>${logPattern}</pattern>
-        </layout>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${logPattern}</pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
@@ -39,17 +36,16 @@
         </filter>
     </appender>
     <appender name="FILE-WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <Encoding>UTF-8</Encoding>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logDirectory}/${logFileName}.warn.log.%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>${logFileMaxHistoryCount}</MaxHistory>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <!-- Formatted output:-->
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <pattern>${logPattern}</pattern>
-        </layout>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${logPattern}</pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
             <onMatch>ACCEPT</onMatch>
@@ -57,17 +53,16 @@
         </filter>
     </appender>
     <appender name="FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <Encoding>UTF-8</Encoding>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logDirectory}/${logFileName}.%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>${logFileMaxHistoryCount}</MaxHistory>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <!-- Formatted output: -->
-            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-            <pattern>${logPattern}</pattern>
-        </layout>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${logPattern}</pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>${logLevel}</level>
         </filter>

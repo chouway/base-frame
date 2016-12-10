@@ -11,7 +11,8 @@
 
 	<!-- dubbo function configuration -->
 	<!-- app name -->
-	<dubbo:application name="base-server"/>
+	<dubbo:application name="base-server" logger="slf4j"/>
+
 	<!-- zookeeper registry center address -->
 	<dubbo:registry address="${mvn.zookeeper.address}" id="base" default="true"/>
 	<dubbo:consumer retries="0" timeout="100000" check="false" registry="base"/>

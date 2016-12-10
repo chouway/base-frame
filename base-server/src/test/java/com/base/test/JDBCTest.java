@@ -7,6 +7,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

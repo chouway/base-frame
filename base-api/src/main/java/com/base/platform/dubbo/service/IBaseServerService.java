@@ -20,7 +20,7 @@ public interface IBaseServerService {
     /**
      * 通过服务key 获取 相关的服务
      * @param serverKey the server key
-     * @return object
+     * @return object object
      */
     Object baseServer(String serverKey);
 
@@ -29,7 +29,7 @@ public interface IBaseServerService {
      * Add server base server info.
      * @param baseServerInfo the base server info
      * @return base server info
-     * @throws RuntimeException the runtime exception
+     * @throws BusinessException the business exception
      */
     BaseServerInfo addServer(BaseServerInfo baseServerInfo) throws BusinessException;
 
@@ -42,26 +42,36 @@ public interface IBaseServerService {
     /**
      * Get ext by map
      * createby zhouyw on 2016.12.09
-     * @param params
-     * @return list
-     * @throws BusinessException
+     * @param params the params
+     * @return list ext by map
+     * @throws BusinessException the business exception
      */
     List<BaseServerInfo> getExtByMap(Map<String,Object> params)throws BusinessException;
 
     /**
      * Get ext by page
      * createby zhouyw on 2016.12.09
-     * @param params
-     * @param page
-     * @return page
-     * @throws BusinessException
+     * @param params the params
+     * @param page   the page
+     * @return page ext by page
+     * @throws BusinessException the business exception
      */
     Page<BaseServerInfo> getExtByPage(Map<String,Object> params, Page page)throws BusinessException;
 
     /**
      * Deal need msg busi 处理需要消息队列处理的业务
      * createby zhouyw on 2016.12.09
-     * @throws BusinessException
+     * @throws BusinessException the business exception
      */
     void dealNeedMsgBusi()throws BusinessException;
+
+
+    /**
+     * See first my batis cache.
+     * mybtais查询一级缓存  默认开启 当update/delete/insert commit操作时刷新缓存
+     * 缓存的级别为 sqlSession； 各个sqlSession下的一级缓存独立，互不影响
+     * createby zhouyw on 2016.12.10
+     * @throws BusinessException the business exception
+     */
+    void seeFirstMyBatisCache()throws BusinessException;
 }
