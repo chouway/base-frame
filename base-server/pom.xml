@@ -6,7 +6,6 @@
         <groupId>com.base</groupId>
         <artifactId>base-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../base-parent</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

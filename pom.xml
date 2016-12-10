@@ -12,11 +12,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../base-api</module>
-        <module>../base-server</module>
-        <module>../base-common</module>
-        <module>../base-simple</module>
-        <module>../base-web</module>
+        <module>base-api</module>
+        <module>base-server</module>
+        <module>base-common</module>
+        <module>base-simple</module>
+        <module>base-web</module>
     </modules>
 
     <properties>
