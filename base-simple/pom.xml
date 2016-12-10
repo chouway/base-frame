@@ -13,13 +13,13 @@
     <groupId>${parent.groupId}</groupId>
     <artifactId>base-simple</artifactId>
     <packaging>jar</packaging>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.base</groupId>
             <artifactId>base-common</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- freemarker springMVC4 in favor of  -->
         <dependency>
@@ -33,6 +33,13 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
             <version>${activemq-all.version}</version>
+        </dependency>
+
+        <!--缓存-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
         </dependency>
 
     </dependencies>

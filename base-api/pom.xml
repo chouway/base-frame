@@ -13,13 +13,13 @@
     <groupId>${parent.groupId}</groupId>
     <artifactId>base-api</artifactId>
     <packaging>jar</packaging>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.base</groupId>
             <artifactId>base-common</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -46,7 +46,7 @@
                     <dependency>
                         <groupId>com.base</groupId>
                         <artifactId>base-common</artifactId>
-                        <version>${parent.version}</version>
+                        <version>${project.parent.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

@@ -14,20 +14,20 @@
     <groupId>${parent.groupId}</groupId>
     <artifactId>base-web</artifactId>
     <packaging>war</packaging>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
 
     <dependencies>
 
         <dependency><!--依赖越短  优先级别越高-->
             <groupId>com.base</groupId>
             <artifactId>base-common</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.base</groupId>
             <artifactId>base-api</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
 

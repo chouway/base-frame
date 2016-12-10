@@ -2,6 +2,7 @@ package com.base.simple.freemarker;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.Version;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -23,7 +24,7 @@ public class FreeMarkerUtil {
     public Template getTemplate(String name) {
         try {
             // 通过Freemark而的Configuration读取到相应的模板ftl
-            Configuration cfg = new Configuration();
+            Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
             // 设定去哪里读取相关的模板FTL文件
             cfg.setClassForTemplateLoading(this.getClass(), "/");
             // 在模板文件目录中找到名为name的文件

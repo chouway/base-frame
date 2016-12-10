@@ -12,7 +12,7 @@
 
     <groupId>${parent.groupId}</groupId>
     <artifactId>base-common</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
 
     <dependencies>
         <dependency>

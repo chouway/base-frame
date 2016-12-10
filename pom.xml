@@ -20,6 +20,8 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <spring.version>4.3.2.RELEASE</spring.version>
         <java.source.version>1.7</java.source.version>
         <java.target.version>1.7</java.target.version>
