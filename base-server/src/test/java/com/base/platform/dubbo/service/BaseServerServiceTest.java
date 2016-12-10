@@ -44,9 +44,7 @@ public class BaseServerServiceTest extends CommonTest{
 
     @Test
     public void countServer() throws Exception {
-        BaseServerInfoCondition condition = new BaseServerInfoCondition();
-//      condition.createCriteria().andIdEqualTo("1");
-        long countServer = baseServerService.countServer(condition);
+        long countServer = baseServerService.countServer();
         logger.info("-->countServer={}", countServer);
     }
 

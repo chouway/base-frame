@@ -71,7 +71,9 @@ public class BaseServerService extends BaseService implements IBaseServerService
     }
 
     @Override
-    public long countServer(BaseServerInfoCondition condition) {
+    public long countServer() {
+        BaseServerInfoCondition condition = new BaseServerInfoCondition();
+        condition.createCriteria();
         return this.getDao(BaseServerInfoDao.class).countByCondition(condition);
     }
 

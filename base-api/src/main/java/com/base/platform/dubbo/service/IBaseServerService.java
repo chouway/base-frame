@@ -35,10 +35,9 @@ public interface IBaseServerService {
 
     /**
      * Count server long.
-     * @param condition the condition
      * @return the long
      */
-    long countServer(BaseServerInfoCondition condition);
+    long countServer();
 
     /**
      * Get ext by map

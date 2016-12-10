@@ -2,6 +2,7 @@ package com.base.platform.dubbo;
 
 import com.alibaba.fastjson.JSON;
 import com.base.platform.dubbo.domain.BaseServerInfo;
+import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.platform.dubbo.service.IBaseServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,11 @@ public class DubboBaseController {
 
     @RequestMapping(value = "/server.htm")
     public String init(Model model){
+        BaseServerInfoCondition baseServerInfoCondition = new BaseServerInfoCondition();
+        baseServerInfoCondition.createCriteria();
+        long count = baseServerService.countServer();
+        logger.info("-->count={}", count);
+
 
         BaseServerInfo baseServerInfo = new BaseServerInfo();
         baseServerInfo.setId("test_web_input");
