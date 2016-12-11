@@ -12,16 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date 2016.09.04
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:/META-INF/spring/*.xml"})
-@ContextConfiguration(locations = {
-        "classpath:/META-INF/spring/appCtx-aop.xml",
-        "classpath:/META-INF/spring/appCtx-aop-tx.xml",
-        "classpath:/META-INF/spring/appCtx-base.xml",
-        "classpath:/META-INF/spring/appCtx-dao.xml",
-        "classpath:/META-INF/spring/appCtx-dubbo.xml",
-        "classpath:/META-INF/spring/appCtx-datasource.xml",
-        "classpath:/META-INF/spring/appCtx-message.xml"
-})
+@ContextConfiguration(locations = {"classpath:/META-INF/spring/*.xml"})
 public class CommonTest {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 }

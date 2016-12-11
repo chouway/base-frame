@@ -109,7 +109,6 @@
             <artifactId>zookeeper</artifactId>
             <version>${zookeeper.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
         <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
@@ -119,7 +118,6 @@
         <!--zookeeper END -->
 
         <!--dubbo STR -->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
@@ -151,6 +149,14 @@
             <version>${velocity-tools.version}</version>
         </dependency>
         <!-- velocity end-->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

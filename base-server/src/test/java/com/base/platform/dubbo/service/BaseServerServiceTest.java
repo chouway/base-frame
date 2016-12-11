@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.base.framework.CommonTest;
 import com.base.framework.bean.page.Page;
 import com.base.platform.dubbo.domain.BaseServerInfo;
-import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

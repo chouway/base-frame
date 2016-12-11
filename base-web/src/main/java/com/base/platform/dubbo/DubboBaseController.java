@@ -31,7 +31,7 @@ public class DubboBaseController {
     private IBaseServerService baseServerService;
 
     @RequestMapping(value = "/server.htm")
-    public String init(Model model){
+    public String initServer(Model model){
         BaseServerInfoCondition baseServerInfoCondition = new BaseServerInfoCondition();
         baseServerInfoCondition.createCriteria();
         long count = baseServerService.countServer();
@@ -77,6 +77,7 @@ public class DubboBaseController {
     @RequestMapping(value = "/appInfo.htm")
     public String appInfo(Model model,String appInfo){
         logger.info("-->appInfo={}", appInfo);
+        model.addAttribute("appInfo",appInfo);
         return "/dubbo/base/server.html";
     }
 }
