@@ -2,10 +2,30 @@ package com.base.simple.test.reptile;
 
 import com.base.simple.common.CommonTest;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.cookie.CookieSpec;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -19,10 +39,16 @@ import java.util.regex.Pattern;
  * @date 2016.12.15
  */
 public class ReptileTest extends CommonTest {
+
+    private String BAIDU_URL = "http://www.baidu.com";
+    private String ZHIHU_URL = "https://www.zhihu.com";
+    private String myCookie;
+
     @Test
     public void getUrlContent() {
         // 定义即将访问的链接
-        String url = "http://www.baidu.com";
+        String url = BAIDU_URL;
+
         // 访问链接并获取页面内容
         String result = getContentFromUrl(url);
         logger.info("result={}", result);
@@ -32,6 +58,25 @@ public class ReptileTest extends CommonTest {
         Set<String> set  = match(result, regex);
         logger.info("-->size={},set={}",set.size(), set);
     }
+
+    @Test
+    public void getContentFromZhiHu() {
+
+    }
+    /*作者：卧颜沉默
+    链接：https://www.zhihu.com/question/36909173/answer/97643000
+    来源：知乎
+    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。*/
+    /**
+     *
+     * @param httpClient Http客户端
+     * @param context Http上下文
+     * @return
+     */
+    private boolean login(CloseableHttpClient httpClient, HttpClientContext context){
+       return false;//TODO
+    }
+
 
     @Test
     public void reptileCircle(){
@@ -101,7 +146,7 @@ public class ReptileTest extends CommonTest {
             logger.info("empty-->url={}", url);
             return "";
         }
-        if(url.indexOf("http://")==-1){
+        if(url.indexOf("http://")==-1 && url.indexOf("https://")==-1){
             url = "http://" + url;
         }
         // 定义一个字符串用来存储网页内容
@@ -138,4 +183,8 @@ public class ReptileTest extends CommonTest {
         }
         return result;
     }
+
+
+
+
 }
