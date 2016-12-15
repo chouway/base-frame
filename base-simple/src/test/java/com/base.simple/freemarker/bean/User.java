@@ -1,5 +1,7 @@
 package com.base.simple.freemarker.bean;
 import java.io.Serializable;
+import java.util.List;
+
 /**
  * User
  * @author zhouyw
@@ -11,6 +13,15 @@ public class User implements Serializable {
     private String name;
     private int age;
     private Group group;
+    private List<String> list;
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
 
     public int getId() {
         return id;
