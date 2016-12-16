@@ -158,6 +158,28 @@
             <filter>src/main/resources/maven_build/${environmentProperties}</filter>
         </filters>
         <plugins>
+            <!--依赖分析-->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeTypes>jar</includeTypes>
+                    <includeScope>compile</includeScope>
+                    <overWriteSnapshots>true</overWriteSnapshots>
+                    <type>jar</type>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
