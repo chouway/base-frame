@@ -74,4 +74,22 @@ public interface IBaseServerService {
      * @throws BusinessException the business exception
      */
     void seeFirstMyBatisCache()throws BusinessException;
+
+
+    /**
+     * Get datat with redis cache
+     * createby zhouyw on 2016.12.21
+     * @param id
+     * @throws BusinessException
+     */
+    BaseServerInfo getDatatWithRedisCache(String id)throws BusinessException;
+
+    /**
+     * Add data with redis cache
+     * createby zhouyw on 2016.12.21
+     * @param baseServerInfo
+     * @return int
+     * @throws BusinessException
+     */
+    BaseServerInfo  addDataWithRedisCache(BaseServerInfo baseServerInfo)throws BusinessException;
 }

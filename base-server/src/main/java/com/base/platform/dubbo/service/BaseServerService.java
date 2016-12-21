@@ -14,6 +14,9 @@ import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.framework.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -118,6 +122,39 @@ public class BaseServerService extends BaseService implements IBaseServerService
 
         long count_1 = baseServerInfoDao.countByCondition(condition);
         logger.info("second-->count_1={}", count_1);
+    }
+
+    /**
+     * Get datat with redis cache
+     * createby zhouyw on 2016.12.21
+     * @param id
+     * @throws BusinessException
+     */
+    @Override
+    @Cacheable(value = "baseServerInfo", key = "'base_server_info_'+#id")
+    public BaseServerInfo getDatatWithRedisCache(String id) throws BusinessException {
+        logger.info("getDatatWithRedisCache-->id={}", id);
+        if("0".equals(id)){
+            BaseServerInfo baseServerInfo  = new BaseServerInfo();
+            baseServerInfo.setId("0");
+            baseServerInfo.setServerName("0_test_0");
+            return baseServerInfo;
+        }
+        return null;
+    }
+
+    /**
+     * Add data with redis cache
+     * createby zhouyw on 2016.12.21
+     * @param baseServerInfo
+     * @return int
+     * @throws BusinessException
+     */
+    @Override
+    @Caching(put = {@CachePut(value = "baseServerInfo", key = "'base_server_info_'+#baseServerInfo.id")})
+    public BaseServerInfo addDataWithRedisCache(BaseServerInfo baseServerInfo) throws BusinessException {
+        logger.info("addDataWithRedisCache-->baseServerInfo={}", JSON.toJSONString(baseServerInfo));
+        return baseServerInfo;
     }
 
 
