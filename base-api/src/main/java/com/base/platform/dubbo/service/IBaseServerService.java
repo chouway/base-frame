@@ -92,4 +92,10 @@ public interface IBaseServerService {
      * @throws BusinessException
      */
     BaseServerInfo  addDataWithRedisCache(BaseServerInfo baseServerInfo)throws BusinessException;
+
+    /**
+     * Drool dubbo
+     * createby zhouyw on 2017.01.16
+     */
+    void droolDubbo();
 }

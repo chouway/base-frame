@@ -1,0 +1,12 @@
+package rules.dubbo;/*这里的包路径可以不并写到相应的位置*/
+
+import com.base.platform.dubbo.domain.BaseServerInfo;/*这里引用的POJO必须是正确的*/
+
+rule "test"   /*规则名*/
+    salience 1  /*优先级， 值越大，优先级越高*/
+    when
+        $base : BaseServerInfo(id == "test");
+    then
+        $base.setServerName("testService");
+        retract($base);
+end

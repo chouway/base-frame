@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:kie="http://drools.org/schema/kie-spring"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://drools.org/schema/kie-spring http://drools.org/schema/kie-spring.xsd">
+
+	<kie:kmodule id="kmodule" >  <!-- id 起名规范就可以 -->
+		<kie:kbase name="kbase" packages="rules.dubbo"><!-- name起名规范就可以    packages=/指到最后一层文件夹/   注 这里是实际的目录  -->
+			<kie:ksession name="ksession"   scope="prototype" /> <!-- name起名规则就可以，这个的name 是要在下面的测试类中用到的 -->
+		</kie:kbase>
+	</kie:kmodule>
+	<bean id="kiePostProcessor" class="org.kie.spring.annotations.KModuleAnnotationPostProcessor " />
+
+</beans>

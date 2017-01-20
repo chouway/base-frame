@@ -13,6 +13,10 @@
     <artifactId>base-simple</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <drools.version>6.5.0.Final</drools.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.base</groupId>
@@ -55,5 +59,27 @@
             <version>1.7.2</version>
         </dependency>
         <!--爬虫END-->
+
+
+
+
+        <!-- start drools   最少引用 drools-core compiler -->
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <!--    spring集成drools
+           <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <version>${drools.version}</version>
+        </dependency>-->
+        <!-- end drools -->
     </dependencies>
 </project>

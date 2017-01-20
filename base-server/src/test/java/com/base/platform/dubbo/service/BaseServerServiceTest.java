@@ -76,4 +76,9 @@ public class BaseServerServiceTest extends CommonTest{
     public void testSeeFirstMyBatisCache() throws Exception {
         baseServerService.seeFirstMyBatisCache();
     }
+
+    @Test
+    public void testDroolDubbo() throws Exception {
+        baseServerService.droolDubbo();
+    }
 }

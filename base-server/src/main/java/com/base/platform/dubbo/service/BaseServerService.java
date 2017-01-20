@@ -12,6 +12,8 @@ import com.base.framework.context.BaseService;
 import com.base.platform.dubbo.domain.BaseServerInfo;
 import com.base.platform.dubbo.domain.BaseServerInfoCondition;
 import com.base.framework.util.UUIDUtils;
+import org.kie.api.cdi.KSession;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachePut;
@@ -42,6 +44,9 @@ public class BaseServerService extends BaseService implements IBaseServerService
 
     @Value("${application.preFixedUrl}")
     private String preFixedUrl;
+
+    @KSession("ksession")//注： 这里的值与配置文件中的值是一样的
+    private KieSession ksession;
 
     @PostConstruct
     private void init(){
@@ -155,6 +160,21 @@ public class BaseServerService extends BaseService implements IBaseServerService
     public BaseServerInfo addDataWithRedisCache(BaseServerInfo baseServerInfo) throws BusinessException {
         logger.info("addDataWithRedisCache-->baseServerInfo={}", JSON.toJSONString(baseServerInfo));
         return baseServerInfo;
+    }
+
+    /**
+     * Drool dubbo
+     * createby zhouyw on 2017.01.16
+     */
+    @Override
+    public void droolDubbo() {//运行测试类 如果 在测试 resource下没有相应的drl 它是找不到的。。。
+        BaseServerInfo baseServerInfo = new BaseServerInfo();
+        baseServerInfo.setId("test");
+        logger.info("bf-->baseServerInfo={}", JSON.toJSONString(baseServerInfo));
+        ksession.insert(baseServerInfo);
+        int i = ksession.fireAllRules();
+
+        logger.info("af-->i={},baseServerInfo={}", i,JSON.toJSONString(baseServerInfo));
     }
 
 
