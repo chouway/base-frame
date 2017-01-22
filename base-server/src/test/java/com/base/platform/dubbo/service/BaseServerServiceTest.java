@@ -64,12 +64,15 @@ public class BaseServerServiceTest extends CommonTest{
     }
 
     @Test
-    public void testDealNeedMsgBusi() throws Exception {
-            baseServerService.dealNeedMsgBusi();
-            logger.info("-->testlog1");
-            logger.info("-->testlog2");
-
+    public void testSendQueueMsg() throws Exception {
+            baseServerService.sendQueueMsg();
             Thread.sleep(10*1000l);
+    }
+
+    @Test
+    public void testPublishTopicMsg() throws Exception {
+        baseServerService.publishTopicMsg();//TODO 发布-订单 模式 接收不到消息
+        Thread.sleep(10*1000l);
     }
 
     @Test

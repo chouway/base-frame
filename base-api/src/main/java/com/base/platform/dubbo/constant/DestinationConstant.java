@@ -11,4 +11,6 @@ import com.base.platform.dubbo.service.IBaseServerService;
 public class DestinationConstant {
 
     public static final String QUEUE_BASE_SERVER_SERVICE = "QUEUE_BASE_SERVER_SERVICE";
+
+    public static final String TOPIC_BASE_SERVER_SERVICE = "TOPIC_BASE_SERVER_SERVICE";
 }

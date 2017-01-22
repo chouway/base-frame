@@ -59,11 +59,18 @@ public interface IBaseServerService {
     Page<BaseServerInfo> getExtByPage(Map<String,Object> params, Page page)throws BusinessException;
 
     /**
-     * Deal need msg busi 处理需要消息队列处理的业务
+     * sendQueueMsg 处理需要消息队列处理的业务 点对点
      * createby zhouyw on 2016.12.09
      * @throws BusinessException the business exception
      */
-    void dealNeedMsgBusi()throws BusinessException;
+    void sendQueueMsg()throws BusinessException;
+
+    /**
+     * publishTopicMsg 处理需要消息队列处理的业务 订阅-发布
+     * createby zhouyw on 2016.12.09
+     * @throws BusinessException the business exception
+     */
+    void publishTopicMsg()throws BusinessException;
 
 
     /**

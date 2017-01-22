@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.base.framework.bean.page.Page;
 import com.base.framework.exception.BusinessException;
 import com.base.framework.message.IQueueSender;
+import com.base.framework.message.ITopicSender;
 import com.base.framework.plugin.page.PageHelper;
 import com.base.platform.dubbo.constant.DestinationConstant;
 import com.base.platform.dubbo.dao.mgb.BaseServerInfoDao;
@@ -59,6 +60,9 @@ public class BaseServerService extends BaseService implements IBaseServerService
     @Autowired
     private IQueueSender queueSender;
 
+    @Autowired
+    private ITopicSender topicSender;
+
     @Override
     public Object baseServer(String serverKey) {
         logger.info("-->serverKey={}", serverKey);
@@ -102,19 +106,33 @@ public class BaseServerService extends BaseService implements IBaseServerService
 
 
     /**
-     * Deal need msg busi 处理需要消息队列处理的业务
+     * sendQueueMsg 处理需要消息队列处理的业务 点对点
      * createby zhouyw on 2016.12.09
-     * @throws BusinessException
+     * @throws BusinessException the business exception
      */
     @Override
-    public void dealNeedMsgBusi() throws BusinessException {
-        logger.info("dealNeedMsgBusi-->STR");
+    public void sendQueueMsg() throws BusinessException {
+        logger.info("sendQueueMsg-->STR");
         BaseServerInfo baseServerInfo = new BaseServerInfo();
         baseServerInfo.setId("test-info-msg-obj");
         queueSender.send(DestinationConstant.QUEUE_BASE_SERVER_SERVICE,baseServerInfo);
-
         queueSender.send(DestinationConstant.QUEUE_BASE_SERVER_SERVICE,"test-info-msg-text");
-        logger.info("dealNeedMsgBusi-->END");
+        logger.info("sendQueueMsg-->END");
+    }
+
+    /**
+     * publishTopicMsg 处理需要消息队列处理的业务 订阅-发布
+     * createby zhouyw on 2016.12.09
+     * @throws BusinessException the business exception
+     */
+    @Override
+    public void publishTopicMsg() throws BusinessException {
+        logger.info("publishTopicMsg-->STR");
+        BaseServerInfo baseServerInfo = new BaseServerInfo();
+        baseServerInfo.setId("test-info-msg-obj");
+        topicSender.publish(DestinationConstant.TOPIC_BASE_SERVER_SERVICE,baseServerInfo);
+//      queueSender.send(DestinationConstant.TOPIC_BASE_SERVER_SERVICE,"test-info-msg-text");
+        logger.info("publishTopicMsg-->END");
     }
 
     @Override
@@ -181,7 +199,7 @@ public class BaseServerService extends BaseService implements IBaseServerService
     @JmsListener(destination = DestinationConstant.QUEUE_BASE_SERVER_SERVICE)//def: containerFactory = "jmsListenerContainerFactory"
     public void onMessage(Message message) {
         try{
-           logger.info("-->message={}", message.getClass());
+           logger.info("queue-->message={}", message.getClass());
            if(message instanceof TextMessage){
                TextMessage textMsg = (TextMessage) message;
                logger.info("receive msg-->textMsg={}", textMsg.getText());
@@ -197,6 +215,50 @@ public class BaseServerService extends BaseService implements IBaseServerService
         }catch (Exception e){
            logger.error("error:{}-->[message]={}",e.getMessage(),message,e);
            throw new BusinessException("系统错误");   
+        }
+    }
+
+    @JmsListener(destination = DestinationConstant.TOPIC_BASE_SERVER_SERVICE)//def: containerFactory = "jmsListenerContainerFactory"
+    public void onTopic0Message(Message message) {
+        try{
+            logger.info("topic_0-->message={}", message.getClass());
+            if(message instanceof TextMessage){
+                TextMessage textMsg = (TextMessage) message;
+                logger.info("receive msg-->textMsg={}", textMsg.getText());
+            }else if(message instanceof ObjectMessage){
+                Serializable object = ((ObjectMessage) message).getObject();
+                logger.info("receive msg-->object={}", JSON.toJSONString(object));
+            }else{
+                throw new BusinessException("暂未定义的消息类型");
+            }
+        }catch (BusinessException e){
+            logger.error("busi error:{}-->[message]={}",e.getMessage(), message,e);
+            throw e;
+        }catch (Exception e){
+            logger.error("error:{}-->[message]={}",e.getMessage(),message,e);
+            throw new BusinessException("系统错误");
+        }
+    }
+
+    @JmsListener(destination = DestinationConstant.TOPIC_BASE_SERVER_SERVICE)//def: containerFactory = "jmsListenerContainerFactory"
+    public void onTopic1Message(Message message) {
+        try{
+            logger.info("topic_1-->message={}", message.getClass());
+            if(message instanceof TextMessage){
+                TextMessage textMsg = (TextMessage) message;
+                logger.info("receive msg-->textMsg={}", textMsg.getText());
+            }else if(message instanceof ObjectMessage){
+                Serializable object = ((ObjectMessage) message).getObject();
+                logger.info("receive msg-->object={}", JSON.toJSONString(object));
+            }else{
+                throw new BusinessException("暂未定义的消息类型");
+            }
+        }catch (BusinessException e){
+            logger.error("busi error:{}-->[message]={}",e.getMessage(), message,e);
+            throw e;
+        }catch (Exception e){
+            logger.error("error:{}-->[message]={}",e.getMessage(),message,e);
+            throw new BusinessException("系统错误");
         }
     }
 }
