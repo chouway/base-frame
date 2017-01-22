@@ -32,4 +32,13 @@
 		</tx:attributes>
 	</tx:advice>
 
+	<!--日记切片-->
+	<bean id="loggerAspect" class="com.base.framework.log.LoggerAspect" />
+	<aop:config>
+		<aop:aspect id="LoggerAspect" ref="loggerAspect">
+			<aop:pointcut id="businessService" expression="execution(* com.base.platform.*.service.*Service.*(..))" />
+			<aop:around pointcut-ref="businessService" method="simpleAdvice" />
+		</aop:aspect>
+	</aop:config>
+
 </beans>

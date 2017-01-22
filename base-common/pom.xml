@@ -146,7 +146,11 @@
             <scope>provided</scope>
         </dependency>
         <!-- velocity end-->
-
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectjrt.version}</version>
+        </dependency>
         <!-- provided  END-->
     </dependencies>
 </project>

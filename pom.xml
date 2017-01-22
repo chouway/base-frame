@@ -51,6 +51,7 @@
         <activemq-all.version>5.14.1</activemq-all.version>
         <jedis.version>2.9.0</jedis.version>
         <drools.version>6.5.0.Final</drools.version>
+        <aspectjrt.version>1.8.9</aspectjrt.version>
     </properties>
 
     <!-- 依赖预配置 -->
