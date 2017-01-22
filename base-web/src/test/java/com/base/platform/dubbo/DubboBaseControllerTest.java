@@ -3,8 +3,11 @@ package com.base.platform.dubbo;
 import com.alibaba.fastjson.JSON;
 import com.base.common.CommonTest;
 import com.base.common.WebCommonTest;
+import com.base.framework.util.LogUtils;
+import com.base.framework.util.UUIDUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -28,6 +32,12 @@ public class DubboBaseControllerTest extends WebCommonTest {
 
     @Test
     public void initServer()throws Exception{
+        String username = "test";
+        String logSerial = LogUtils.getSerial();
+        MDC.put("username",username);
+        MDC.put("logSerial", logSerial);
+        logger.info("test-->username={},logSerial={}", username,logSerial);
+
         MvcResult result = getMockMvc().perform(MockMvcRequestBuilders.get("/dubbo/base/server.htm"))
                 .andExpect(MockMvcResultMatchers.view().name("/dubbo/base/server.html"))
                 .andReturn();

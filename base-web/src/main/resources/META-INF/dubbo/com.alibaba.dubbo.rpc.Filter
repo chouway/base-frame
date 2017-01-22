@@ -1,1 +1,1 @@
-ReferenceFilter=com.base.framework.log.DubboLogServiceFilter
+ReferenceFilter=com.base.framework.log.DubboLogReferenceFilter

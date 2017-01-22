@@ -51,11 +51,7 @@ public class LoggerAspect {
                 method = clazz.getDeclaredMethod(joinPoint.getSignature().getName(), method.getParameterTypes());
             }
             Annotation[] annotations = method.getAnnotations();
-            if(annotations!=null){
-                for (Annotation annotation : annotations) {
-                    logger.info("-->annotation={}", annotation);
-                }
-            }
+            logger.info("log -->annotations={}", annotations);
             logger.info("log str-->method={},args={}",method,JSON.toJSONString(args));
 
 

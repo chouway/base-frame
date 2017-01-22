@@ -14,7 +14,7 @@
 	<!-- 监控配置
 	<dubbo:monitor protocol="registry"/>
 	-->
-	<!--<dubbo:consumer timeout="100000" filter="ReferenceFilter" registry="base-server" check="false"/>-->
+	<dubbo:consumer timeout="100000" filter="ReferenceFilter" registry="base" check="false"/>
 
 	<!-- 配置dubbo直连文件（开发环境使用，日构建取消） -->
 	<bean

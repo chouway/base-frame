@@ -17,7 +17,10 @@ public class DubboLogServiceFilter implements Filter {
     public DubboLogServiceFilter() {
     }
 
+    @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        logger.info("dubboLogServiceFilter-->invoker={}", invoker);
+
         RpcContext context = RpcContext.getContext();
         String logSerial = context.getAttachment("logSerial");
         String username = context.getAttachment("username");
