@@ -1,4 +1,4 @@
-package com.base.simple.test.regex.formula.bean.calc;
+package com.base.simple.test.regex.formula.bean;
 
 /**
  * CalcOperConstant  运算项 + - * /
