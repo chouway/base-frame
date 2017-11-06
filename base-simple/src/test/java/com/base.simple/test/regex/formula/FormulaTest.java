@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -37,7 +38,7 @@ public class FormulaTest extends CommonTest {
     /**
      * 基础项变量 前后都是 $$ 且受变量限制
      */
-    private final String baseKeyLimit = "(?<=\\$)[" + keyLimit + "].*?(?=\\$)";
+    private final String baseKeyLimit = "(?<=\\$)[" + keyLimit + "]*?(?=\\$)";
     /**
      * 运算项变量 前后都是 ## 且受变量限制
      */
@@ -45,15 +46,42 @@ public class FormulaTest extends CommonTest {
 
     @Test
     public void testRegister() {
-        String itemContent = "($a$ + $A$ + $中$ + $_$ + ($b$ + $c$) + ($b$ + $c$) + $d$ * $e$ / $c$)";
+        Map<String,String> bdMap = new HashMap<String,String>();
+        bdMap.put("a","10");
+        bdMap.put("A","10");
+        bdMap.put("中","10");
+        bdMap.put("_","10");
+        bdMap.put("b","10");
+        bdMap.put("c","10");
+        bdMap.put("d","10");
+        bdMap.put("e","10");
+        String itemContent = "($a$ + $A$ + $中$ + $_$ + ($b$ + ($c$) + ($b$) + $c$) + $d$ * $e$ / $c$)";
+        itemContent = this.trimSpace(itemContent);
         String reg = baseKeyLimit;
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(itemContent);
+
+        StringBuffer sbf = new StringBuffer();
+        int startT = 0;
+        int endT = 0;
         while (matcher.find()) {
             String group = matcher.group();
-            logger.info("-->group={},where=[{},{}]", group, matcher.start(), matcher.end());
-
+//          logger.info("-->group={},where=[{},{}]", group, matcher.start(), matcher.end());
+            if(!bdMap.containsKey(group)){
+                throw new RuntimeException("基础项未赋值:" + group);
+            }
+            endT = matcher.start() - 1;
+            sbf.append(itemContent.substring(startT, endT));
+            sbf.append(bdMap.get(group));
+            startT = matcher.end() + 1;
         }
+        sbf.append(itemContent.substring(startT, itemContent.length()));
+        String calcEnd = sbf.toString();
+        logger.info("-->calcEnd={}", calcEnd);
+
+        String result = this.cirCalc(calcEnd, 0);
+        logger.info("-->result={}", result);
+        
     }
 
     @Test
@@ -108,6 +136,11 @@ public class FormulaTest extends CommonTest {
     private String calcSimple(String operItem) {//无括号的简单的oper构成的项
         try {
             logger.info("calc-->operItem={}", operItem);
+            if (operItem.indexOf("-") == 0) {//第一项为减号的话 ，补充完整
+                operItem = "0" + operItem;
+            }else{//统一运算
+                operItem = "0+" + operItem;
+            }
             //1: 切分运算符
             String[] items = operItem.split("[" + operLimit + "]");
             if (items == null) {
@@ -130,59 +163,40 @@ public class FormulaTest extends CommonTest {
             BigDecimal preResult = null;//临时值 用来计算连续的乘除
             int size = operMap.size();
             for (Map.Entry<Integer, String> entry : operMap.entrySet()) {//优先计算乘法除法
-                Integer indexT = entry.getKey();
+                int indexT = entry.getKey();
+                int indexNext = indexT + 1;
+                //操作符前一项
+                BigDecimal leftV = new BigDecimal(items[indexT]);
+                BigDecimal rightV = new BigDecimal(items[indexNext]);
+                //当前操作符
                 String oper = entry.getValue();
-                String operNext = operMap.get(indexT + 1);
-                if (indexT == 0) {//首项
-                    if (isAddOrSub(operNext)) {//下一运算符是加减
-                        totalBD = totalBD.add(this.calc(new BigDecimal(items[0]), oper, new BigDecimal(items[1])));
-                    } else {//下一项是乘除
-                        if (isAddOrSub(oper)) {//当前 加减
-                            totalBD = totalBD.add(new BigDecimal(items[0]));
-                        } else {//当前是乘除
-                            if (CalcOper.SUB.equals(oper)) {// -
-                                preResult = BigDecimal.ZERO.subtract(this.calc(new BigDecimal(items[0]), oper, new BigDecimal(items[1])));
-                            } else {//
-                                preResult = this.calc(new BigDecimal(items[0]), oper, new BigDecimal(items[1]));
-                            }
-                        }
+                //下一个操作符
+                String operNext = operMap.get(indexNext);
 
+                if (CalcOper.MULT.equals(oper) || CalcOper.DIVIDE.equals(oper)) {//乘除的结果具有累积性
+                    if (preResult != null) {
+                        leftV = preResult;
                     }
-                } else {
-                    if (CalcOper.MULT.equals(oper)) {
-                        if (preResult == null) {
-                            preResult = new BigDecimal(items[indexT]);
-                        }
-                        preResult = this.calc(preResult, oper, new BigDecimal(items[indexT + 1]));
-                        if (isAddOrSub(operNext)) {
-                            totalBD = totalBD.add(preResult.add(BigDecimal.ZERO));
-                            preResult = null;
-                        }
-                    } else if (CalcOper.DIVIDE.equals(oper)) {
-                        if (preResult == null) {
-                            preResult = new BigDecimal(items[indexT]);
-                        }
-                        preResult = this.calc(preResult, oper, new BigDecimal(items[indexT + 1]));
-                        if (isAddOrSub(operNext)) {
-                            totalBD = totalBD.add(preResult);
-                            preResult = null;
-                        }
-                    } else if (CalcOper.ADD.equals(oper)) {
-                        if (isAddOrSub(operNext)) {
-                            totalBD.add(new BigDecimal(items[indexT + 1]));
-                        }
-                        continue;
-                    } else if (CalcOper.SUB.equals(oper)) {
-                        if (isAddOrSub(operNext)) {
-                            totalBD = totalBD.subtract(new BigDecimal(items[indexT + 1]));
-                        } else if (isMultOrDivi(operNext)) {
-                            preResult = BigDecimal.ZERO.subtract(new BigDecimal(items[indexT + 1]));
-                        }
-                        continue;
+                    preResult = this.calc(leftV, oper, rightV);
+                    if (isFirst(operNext)) {
+                        totalBD = totalBD.add(preResult);
+                        preResult = null;
                     }
+                } else if (CalcOper.ADD.equals(oper)) {
+                    if (isFirst(operNext)) {
+                        totalBD = totalBD.add(rightV);
+                    }
+                    continue;
+                } else if (CalcOper.SUB.equals(oper)) {
+                    if (isFirst(operNext)) {
+                        totalBD = totalBD.subtract(new BigDecimal(items[indexNext]));
+                    } else {
+                        preResult = BigDecimal.ZERO.subtract(new BigDecimal(items[indexNext]));
+                    }
+                    continue;
                 }
             }
-            return totalBD.setScale(2, RoundingMode.CEILING).toString();
+            return totalBD.setScale(2, RoundingMode.CEILING).toString();//计算结果保留两位小数
         } catch (Exception e) {
             logger.error("error:-->[operItem]={}", JSON.toJSONString(new Object[]{operItem}), e);
             throw new RuntimeException("计算失败");
@@ -191,12 +205,12 @@ public class FormulaTest extends CommonTest {
 
 
     /**
-     * 计算符是否加法减法
+     * 计算符是否第一运算 ：加减
      * @param s
      * @return
      */
-    private boolean isAddOrSub(String nextOper) {
-        if (nextOper == null) {
+    private boolean isFirst(String nextOper) {
+        if (nextOper == null) {//空默认给为加减 可直接运算
             return true;
         }
         if (CalcOper.ADD.equals(nextOper)) {
@@ -207,19 +221,6 @@ public class FormulaTest extends CommonTest {
         return false;
     }
 
-    /**
-     * 计算符是否乘法除法
-     * @param s
-     * @return
-     */
-    private boolean isMultOrDivi(String preOper) {
-        if (CalcOper.MULT.equals(preOper)) {
-            return true;
-        } else if (CalcOper.DIVIDE.equals(preOper)) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * 简单的四则运算
@@ -238,44 +239,43 @@ public class FormulaTest extends CommonTest {
             if (BigDecimal.ZERO.compareTo(rightV) == 0) {
                 throw new BusinessException("除数为零");
             }
-            result = leftV.divide(rightV, 4, RoundingMode.CEILING);
+            result = leftV.divide(rightV, 4, RoundingMode.CEILING);//除法计算过程 保留四位小数
         } else {
             throw new RuntimeException("运算符无效:" + oper);
         }
         return result;
     }
 
-    private boolean isNextBracket(String itemContent) {
-        return false;
-    }
-
-    ;
 
     private String cirCalc(String itemContent, int circle) {
-        if (itemContent.indexOf("-") == 0) {//第一项为减号的话 ，补充完整
-            itemContent = "0" + itemContent;
-        }
-        logger.info("-->itemContent={},circle={}", itemContent, circle);
+        logger.debug("-->itemContent={},circle={}", itemContent, circle);
 
-        String regex = "(?<=\\()[" + "\\+\\-\\*/\\d\\." + "].*?(?=\\))";// 提取括号表达式
+        String regex = "(?<=\\()[" + "^(" + "]*?(?=\\))";// 提取括号表达式
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(itemContent);
         StringBuffer sbf = new StringBuffer();
         int startT = 0;
         int endT = 0;
+        boolean haveF = false;
         while (matcher.find()) {
+            if(!haveF){
+                haveF = true;
+            }
             String group = matcher.group();
-//          logger.info("-->group={},where=[{},{}]", group,matcher.start(),matcher.end());
+            logger.debug("cirCalc-->group={},where=[{},{}]", group,matcher.start(),matcher.end());
             //TODO 如果是没有运算符的直接去括号（10） (-10)这种数据的
             endT = matcher.start() - 1;
-            sbf.append(itemContent.substring(startT,endT));
+            sbf.append(itemContent.substring(startT, endT));
             sbf.append(this.calcSimple(matcher.group()));
 
             startT = matcher.end() + 1;
         }
+        if(!haveF){
+            throw new RuntimeException("括号不匹配:" + itemContent);
+        }
         sbf.append(itemContent.substring(startT, itemContent.length()));
         String calcEnd = sbf.toString();
-        logger.info("-->calcEnd={}", calcEnd);
+        logger.debug("-->calcEnd={}", calcEnd);
         if (calcEnd.indexOf("(") == -1) {
             return this.calcSimple(calcEnd);
         } else {
@@ -285,5 +285,8 @@ public class FormulaTest extends CommonTest {
             return this.cirCalc(calcEnd, ++circle);
         }
 
+    }
+    private String trimSpace(String source){
+        return source.replaceAll("\\s", "");//去空格
     }
 }
