@@ -3,7 +3,7 @@ package com.base.simple.test.regex.formula;
 import com.alibaba.fastjson.JSON;
 import com.base.framework.exception.BusinessException;
 import com.base.simple.common.CommonTest;
-import com.base.simple.test.regex.formula.bean.CalcOper;
+import com.base.simple.test.regex.formula.constant.CalcOperConstant;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Formula
+ * Formula  简易模式 支持带括号的四则运算
  * @author zhouyw
  * @date 2017.11.03
  */
@@ -24,25 +24,25 @@ public class FormulaTest extends CommonTest {
     /**
      * 变量限制 ：字母 、中文、下划线
      */
-    private final String keyLimit = "\\w\\u4e00-\\u9fa5";
+    private static final String keyLimit = "\\w\\u4e00-\\u9fa5";
     /**
      * 括号以内的串
      */
-    private final String inLRLimit = "\\w\\u4e00-\\u9fa5";
+    private static final String inLRLimit = "\\w\\u4e00-\\u9fa5";
 
     /**
      * 运算符  看成是 减号和后面的值可以看一项
      */
-    private final String operLimit = "\\+\\-\\*/";
+    private static final String operLimit = "\\+\\-\\*/";
 
     /**
      * 基础项变量 前后都是 $$ 且受变量限制
      */
-    private final String baseKeyLimit = "(?<=\\$)[" + keyLimit + "]*?(?=\\$)";
+    private static final String baseKeyLimit = "(?<=\\$)[" + keyLimit + "]*?(?=\\$)";
     /**
      * 运算项变量 前后都是 ## 且受变量限制
      */
-    private final String itemKeyLimit = "(?<=#)[" + keyLimit + "].*?(?=#)";
+    private static final String itemKeyLimit = "(?<=#)[" + keyLimit + "].*?(?=#)";
 
     @Test
     public void testRegister() {
@@ -84,6 +84,61 @@ public class FormulaTest extends CommonTest {
         logger.info("-->result={}", result);
         
     }
+    /**
+     * 替换基础项 成数值
+     * @param itemContent
+     * @param bdMap
+     * @return
+     */
+    public static String replaceBase(String itemContent,Map<String,String> bdMap){
+        StringBuffer sbf = new StringBuffer();
+        int startT = 0;
+        int endT = 0;
+        Pattern pattern = Pattern.compile(baseKeyLimit);
+        Matcher matcher = pattern.matcher(itemContent);
+        while (matcher.find()) {
+            String group = matcher.group();
+            if(!bdMap.containsKey(group)){
+                throw new RuntimeException("基础项未赋值:" + group);
+            }
+            endT = matcher.start() - 1;
+            sbf.append(itemContent.substring(startT, endT));
+            sbf.append(bdMap.get(group));
+            startT = matcher.end() + 1;
+        }
+        sbf.append(itemContent.substring(startT, itemContent.length()));
+        //替换基础项成数值
+        String calcEnd = sbf.toString();
+        return calcEnd;
+    };
+
+    /**
+     * 替换运算项 成数值
+     * @param itemContent
+     * @param bdMap
+     * @return
+     */
+    public static String replaceItem(String itemContent,Map<String,String> bdMap){
+        StringBuffer sbf = new StringBuffer();
+        int startT = 0;
+        int endT = 0;
+        Pattern pattern = Pattern.compile(itemKeyLimit);
+        Matcher matcher = pattern.matcher(itemContent);
+        while (matcher.find()) {
+            String group = matcher.group();
+            if(!bdMap.containsKey(group)){
+                throw new RuntimeException("运算项未赋值:" + group);
+            }
+            endT = matcher.start() - 1;
+            sbf.append(itemContent.substring(startT, endT));
+            sbf.append(bdMap.get(group));
+            startT = matcher.end() + 1;
+        }
+        sbf.append(itemContent.substring(startT, itemContent.length()));
+        //替换基础项成数值
+        String calcEnd = sbf.toString();
+        return calcEnd;
+    };
 
     @Test
     public void testItem() {
@@ -146,13 +201,7 @@ public class FormulaTest extends CommonTest {
             String[] items = operItem.split("[" + operLimit + "]");
             //2: 获取运算符map   运算符:序列
             String regex = "((?<=\\d))[" + operLimit + "]((?=\\d))";
-            Map<Integer, String> operMap = new LinkedHashMap<Integer, String>();
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(operItem);
-            int index = 0;
-            while (matcher.find()) {
-                operMap.put(index++, matcher.group());
-            }
+            Map<Integer, String> operMap = getOperMap(operItem,regex);
             if (operMap.size() == 0) {
                 return new BigDecimal(operItem).setScale(2, BigDecimal.ROUND_CEILING).toString();
             }
@@ -171,7 +220,7 @@ public class FormulaTest extends CommonTest {
                 //下一个操作符
                 String operNext = operMap.get(indexNext);
 
-                if (CalcOper.MULT.equals(oper) || CalcOper.DIVIDE.equals(oper)) {//乘除的结果具有累积性
+                if (CalcOperConstant.MULT.equals(oper) || CalcOperConstant.DIVIDE.equals(oper)) {//乘除的结果具有累积性
                     if (preResult != null) {
                         leftV = preResult;
                     }
@@ -180,12 +229,12 @@ public class FormulaTest extends CommonTest {
                         totalBD = totalBD.add(preResult);
                         preResult = null;
                     }
-                } else if (CalcOper.ADD.equals(oper)) {
+                } else if (CalcOperConstant.ADD.equals(oper)) {
                     if (isFirst(operNext)) {
                         totalBD = totalBD.add(rightV);
                     }
                     continue;
-                } else if (CalcOper.SUB.equals(oper)) {
+                } else if (CalcOperConstant.SUB.equals(oper)) {
                     if (isFirst(operNext)) {
                         totalBD = totalBD.subtract(new BigDecimal(items[indexNext]));
                     } else {
@@ -201,6 +250,17 @@ public class FormulaTest extends CommonTest {
         }
     }
 
+    public static Map<Integer, String> getOperMap(String operItem,String regex) {
+        Map<Integer, String> operMap = new LinkedHashMap<Integer, String>();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(operItem);
+        int index = 0;
+        while (matcher.find()) {
+            operMap.put(index++, matcher.group());
+        }
+        return operMap;
+    }
+
 
     /**
      * 计算符是否第一运算 ：加减
@@ -211,9 +271,9 @@ public class FormulaTest extends CommonTest {
         if (nextOper == null) {//空默认给为加减 可直接运算
             return true;
         }
-        if (CalcOper.ADD.equals(nextOper)) {
+        if (CalcOperConstant.ADD.equals(nextOper)) {
             return true;
-        } else if (CalcOper.SUB.equals(nextOper)) {
+        } else if (CalcOperConstant.SUB.equals(nextOper)) {
             return true;
         }
         return false;
@@ -229,11 +289,11 @@ public class FormulaTest extends CommonTest {
      */
     private BigDecimal calc(BigDecimal leftV, String oper, BigDecimal rightV) {
         BigDecimal result;
-        if (CalcOper.ADD.equals(oper)) {
+        if (CalcOperConstant.ADD.equals(oper)) {
             result = leftV.add(rightV);
-        } else if (CalcOper.MULT.equals(oper)) {
+        } else if (CalcOperConstant.MULT.equals(oper)) {
             result = leftV.multiply(rightV);
-        } else if (CalcOper.DIVIDE.equals(oper)) {
+        } else if (CalcOperConstant.DIVIDE.equals(oper)) {
             if (BigDecimal.ZERO.compareTo(rightV) == 0) {
                 throw new BusinessException("除数为零");
             }

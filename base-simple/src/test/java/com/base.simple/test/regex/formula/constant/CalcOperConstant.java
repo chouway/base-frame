@@ -1,11 +1,11 @@
-package com.base.simple.test.regex.formula.bean;
+package com.base.simple.test.regex.formula.constant;
 
 /**
  * CalcOperConstant  运算项 + - * /
  * @author zhouyw
  * @date 2017.11.03
  */
-public interface CalcOper {
+public interface CalcOperConstant {
 
     String ADD = "+";
 
