@@ -76,6 +76,7 @@ public class FormulaTest extends CommonTest {
             startT = matcher.end() + 1;
         }
         sbf.append(itemContent.substring(startT, itemContent.length()));
+        //替换基础项成数值
         String calcEnd = sbf.toString();
         logger.info("-->calcEnd={}", calcEnd);
 
@@ -133,7 +134,7 @@ public class FormulaTest extends CommonTest {
         Assert.assertTrue(shouldResult.equals(result));
     }
 
-    private String calcSimple(String operItem) {//无括号的简单的oper构成的项
+    private String calcSimple(String operItem) {//无括号的简单的oper构成的运算式子
         try {
             logger.info("calc-->operItem={}", operItem);
             if (operItem.indexOf("-") == 0) {//第一项为减号的话 ，补充完整
@@ -143,9 +144,6 @@ public class FormulaTest extends CommonTest {
             }
             //1: 切分运算符
             String[] items = operItem.split("[" + operLimit + "]");
-            if (items == null) {
-                throw new RuntimeException("运算项无效:" + operItem);
-            }
             //2: 获取运算符map   运算符:序列
             String regex = "((?<=\\d))[" + operLimit + "]((?=\\d))";
             Map<Integer, String> operMap = new LinkedHashMap<Integer, String>();
@@ -246,7 +244,12 @@ public class FormulaTest extends CommonTest {
         return result;
     }
 
-
+    /**
+     * 去括号，运算
+     * @param itemContent
+     * @param circle
+     * @return
+     */
     private String cirCalc(String itemContent, int circle) {
         logger.debug("-->itemContent={},circle={}", itemContent, circle);
 
@@ -279,8 +282,8 @@ public class FormulaTest extends CommonTest {
         if (calcEnd.indexOf("(") == -1) {
             return this.calcSimple(calcEnd);
         } else {
-            if (circle > 10) {
-                throw new RuntimeException("超出10层循环运算");
+            if (circle > 12) {
+                throw new RuntimeException("超出12层括号运算");
             }
             return this.cirCalc(calcEnd, ++circle);
         }
