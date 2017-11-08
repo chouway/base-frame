@@ -200,7 +200,7 @@ public class FormulaTest extends CommonTest {
             //1: 切分运算符
             String[] items = operItem.split("[" + operLimit + "]");
             //2: 获取运算符map   运算符:序列
-            String regex = "((?<=\\d))[" + operLimit + "]((?=\\d))";
+            String regex = "(?<=\\d))[" + operLimit + "](?=\\d)";
             Map<Integer, String> operMap = getOperMap(operItem,regex);
             if (operMap.size() == 0) {
                 return new BigDecimal(operItem).setScale(2, BigDecimal.ROUND_CEILING).toString();
@@ -252,6 +252,7 @@ public class FormulaTest extends CommonTest {
 
     public static Map<Integer, String> getOperMap(String operItem,String regex) {
         Map<Integer, String> operMap = new LinkedHashMap<Integer, String>();
+        operMap.put(-1,"&&");
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(operItem);
         int index = 0;
